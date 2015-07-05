@@ -38,6 +38,30 @@ angular.module('colorgytable', ['ionic', 'colorgytable.controllers'])
         templateUrl: "views/main.html"
       }
     }
+  })
+  .state('app.timetable', {
+    url: '/timetable',
+    views: {
+      'menuContent': {
+        templateUrl: "views/timetable.html"
+      }
+    }
+  })
+  .state('app.profile', {
+    url: '/profile',
+    views: {
+      'menuContent': {
+        templateUrl: "views/profile.html"
+      }
+    }
+  })
+  .state('app.search_course', {
+    url: '/search_course',
+    views: {
+      'menuContent': {
+        templateUrl: "views/search_course.html"
+      }
+    }
   });
 
   $urlRouterProvider.otherwise("/app/main");

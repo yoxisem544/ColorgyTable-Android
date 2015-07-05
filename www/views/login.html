@@ -1,0 +1,24 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">登入Colorgy</h1>
+    <div class="buttons"><button class="button button-clear" ng-click="closeButton()">close</button></div>
+  </ion-header-bar>
+  <ion-content>
+  <div class="list">
+      <form ng-submit="doLogin()">
+        <label for="" class="item item-input">
+          <span class="input-label">Username</span>
+          <input type="text">
+        </label>
+        <label for="" class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Log in</button>
+        </label>
+      </form>
+    </div>
+  </ion-content>
+
+</ion-modal-view>
