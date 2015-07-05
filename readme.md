@@ -17,3 +17,36 @@
 在 Android 上直接跑網頁，比起直接寫 java 簡單（因為我不會寫 java，iOS 寫久了沒辦法咩對不起）
 
 還可以寫 Angular，雖然 React 比較好。
+
+##How to use it?
+###Install Ionic
+
+`npm install -g cordova ionic`
+
+###Run with browser
+`ionic serve`
+
+###Run with iOS
+You must install `xcode` first.
+
+`ionic emulate ios`
+
+###Run with android
+Install `android studio` first.
+
+then install `ant`
+
+`brew install ant`
+
+Cause android platform is not yet added to this project.
+
+You must first add android platform to this project with this command.
+
+`ionic platform add android && ionic build android`
+
+Run it!
+
+`ionic emulate android`
+
+This is very complicated, so I don't like to use android.
+
