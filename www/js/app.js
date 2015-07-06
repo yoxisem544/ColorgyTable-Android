@@ -11,7 +11,7 @@ angular.module('colorgytable', ['ionic', 'colorgytable.controllers', 'ngOpenFB']
     // for form inputs)
     console.log('colorgy table starting...');
 
-    ngFB.init({appId: '752440461479659'});
+    ngFB.init({appId: '752440461479659', oauthRedirectURL: 'http://localhost:8001/#/app/main'});
 
     if(window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);

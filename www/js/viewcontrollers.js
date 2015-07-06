@@ -17,6 +17,8 @@ angular.module('colorgytable.controllers', ['ngOpenFB'])
     console.log("user login state: user logged in.");
   }
 
+  ngFB.revokePermissions();
+
   // this region is login logic....
   $scope.logindata = {};
   $scope.closeButton = function() {
