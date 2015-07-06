@@ -11,6 +11,7 @@ angular.module('colorgytable', ['ionic', 'colorgytable.controllers', 'ngOpenFB']
     // for form inputs)
     console.log('colorgy table starting...');
 
+    // fb redirect url, colorgy oauth here neson, pokai see here.
     ngFB.init({appId: '752440461479659', oauthRedirectURL: 'http://localhost:8100/'});
 
     if(window.cordova && window.cordova.plugins.Keyboard) {
