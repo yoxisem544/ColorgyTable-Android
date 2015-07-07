@@ -43,19 +43,30 @@ angular.module('colorgytable.controllers', ['ngOpenFB'])
 
   // fb region
   $scope.fbLogin = function() {
-    ngFB.login({scope: 'email'}).then(
-        function (response) {
-            if (response.status === 'connected') {
-                console.log('Facebook login succeeded');
-                openFB.getLoginStatus(function(status) {
-                  console.log("callback..");
-                  console.log(status);
-                });
-                $scope.closeLogin();
-            } else {
-                alert('Facebook login failed');
-            }
-        });
+
+    // cordova fb login test
+    if (!window.cordova) {
+                    var appId = prompt("Enter FB Application ID", "");
+                    facebookConnectPlugin.browserInit(appId);
+                }
+                facebookConnectPlugin.login( ["email"], 
+                    function (response) { alert(JSON.stringify(response)) },
+                    function (response) { alert(JSON.stringify(response)) });
+                
+    // ngFB.login({scope: 'email'}).then(
+    //     function (response) {
+    //         if (response.status === 'connected') {
+    //             console.log('Facebook login succeeded');
+    //             openFB.getLoginStatus(function(status) {
+    //               console.log("callback..");
+    //               console.log(status);
+    //               $scope.logindata.username = status.authResponse.accessToken;
+    //             });
+    //             $scope.closeLogin();
+    //         } else {
+    //             alert('Facebook login failed');
+    //         }
+    //     });
   };
 
 })
