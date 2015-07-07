@@ -11,6 +11,10 @@
 
 [![preview](ionic.png)](http://ionicframework.com/)
 
+##待補完 something need to complete
+- ionic & cordova fb native app login
+- how do you add plugins to a cordova/ionic project
+
 ##Why Ionic?
 因為他幫我做好多元件了，棒
 
