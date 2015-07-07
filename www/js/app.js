@@ -12,7 +12,12 @@ angular.module('colorgytable', ['ionic', 'colorgytable.controllers', 'ngOpenFB']
     console.log('colorgy table starting...');
 
     // fb redirect url, colorgy oauth here neson, pokai see here.
-    ngFB.init({appId: '752440461479659', oauthRedirectURL: 'http://localhost:8100/'});
+    ngFB.init({appId: '752440461479659'});
+    // ngFB.init({appId: '752440461479659', oauthRedirectURL: 'http://localhost:8100/'});
+    openFB.getLoginStatus(function(status) {
+      console.log("callback..");
+      console.log(status);
+    });
 
     if(window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);

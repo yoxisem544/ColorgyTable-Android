@@ -17,7 +17,17 @@ angular.module('colorgytable.controllers', ['ngOpenFB'])
     console.log("user login state: user logged in.");
   }
 
-  ngFB.revokePermissions();
+  // test api
+  // ngFB.api({
+  //       path: '/me',
+  //       params: {fields: 'id,name'}
+  //   }).then(
+  //       function (user) {
+  //           $scope.user = user;
+  //       },
+  //       function (error) {
+  //           alert('Facebook error: ' + error.error_description);
+  //       });
 
   // this region is login logic....
   $scope.logindata = {};
@@ -37,6 +47,10 @@ angular.module('colorgytable.controllers', ['ngOpenFB'])
         function (response) {
             if (response.status === 'connected') {
                 console.log('Facebook login succeeded');
+                openFB.getLoginStatus(function(status) {
+                  console.log("callback..");
+                  console.log(status);
+                });
                 $scope.closeLogin();
             } else {
                 alert('Facebook login failed');
