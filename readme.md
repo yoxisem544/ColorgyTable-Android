@@ -14,6 +14,11 @@
 ##待補完 something need to complete
 - ionic & cordova fb native app login
 - how do you add plugins to a cordova/ionic project
+- Android FB login little note.
+  - no need to enter password while generating Hashes...fk
+  - ionic/cordova will do the install fb sdk work for u.
+  - all you need to do is make sure FBAppId is correct.
+  - last, never trust the getting start guide. Always enter hashes in settins, not in quick start....fk.
 
 ##Why Ionic?
 因為他幫我做好多元件了，棒
