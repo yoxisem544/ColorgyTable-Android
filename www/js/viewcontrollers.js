@@ -1,6 +1,6 @@
 angular.module('colorgytable.controllers', ['ngOpenFB'])
 
-.controller('MenuCtrl', function($scope, $ionicModal, ngFB) {
+.controller('MenuCtrl', function($scope, $ionicModal, ngFB, $http) {
 
   // detect if user is logged in.
   if (!window.localStorage['isLogin']) {
@@ -46,12 +46,37 @@ angular.module('colorgytable.controllers', ['ngOpenFB'])
 
     // cordova fb login test
     if (!window.cordova) {
-                    var appId = prompt("Enter FB Application ID", "");
-                    facebookConnectPlugin.browserInit(appId);
-                }
-                facebookConnectPlugin.login( ["email"], 
-                    function (response) { alert(JSON.stringify(response)) },
-                    function (response) { alert(JSON.stringify(response)) });
+      var appId = prompt("Enter FB Application ID", "");
+      facebookConnectPlugin.browserInit(appId);
+    }
+    facebookConnectPlugin.login( ["email"], 
+      function (response) { 
+        // success
+        alert(JSON.stringify(response)) 
+        var token = response.authResponse.accessToken;
+        alert(token);
+        var postData = {
+          grant_type: "password",
+          // 應用程式ID application id, in colorgy server
+          client_id: "ad2d3492de7f83f0708b5b1db0ac7041f9179f78a168171013a4458959085ba4",
+          client_secret: "d9de77450d6365ca8bd6717bbf8502dfb4a088e50962258d5d94e7f7211596a3",
+          username: "facebook:access_token",
+          password: token,
+          scope: "public account offline_access"
+        };
+        $http.post('https://colorgy.io/oauth/token', postData)
+        .success(function(data, status, headers, config) {
+          alert("success post");
+          alert(data);
+        })
+        .error(function(data, status, headers, config) {
+          alert("fuck post");
+        });
+      },
+      function (response) { 
+        // fail
+        alert(JSON.stringify(response)) 
+      });
                 
     // ngFB.login({scope: 'email'}).then(
     //     function (response) {
