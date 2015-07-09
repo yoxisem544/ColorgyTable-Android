@@ -17,17 +17,22 @@ angular.module('colorgytable.controllers', ['ngOpenFB'])
     console.log("user login state: user logged in.");
   }
 
-  // test api
-  // ngFB.api({
-  //       path: '/me',
-  //       params: {fields: 'id,name'}
-  //   }).then(
-  //       function (user) {
-  //           $scope.user = user;
-  //       },
-  //       function (error) {
-  //           alert('Facebook error: ' + error.error_description);
-  //       });
+  // test get
+  var url = "https://colorgy.io/api/v1/me?access_token=7f3d12b83ab4669397e17c689560cfa9770b21a05dcc3ddf05de3f0978ee18a3b56e67c3f3fac8052c6679999fcad1898185baae385711d2f18c6e4091d150c5"
+  console.log("url is " + url);
+  $http.get(url)
+  .success(function(data, status, headers, config) {
+    window.localStorage['userName'] = data.name;
+    window.localStorage['userSchool'] = data.organization;
+    window.localStorage['isLogin'] = true;
+    window.localStroage['loginType'] = 'fb';
+    // login ok.
+    alert("OK");
+    $scope.modal.hide();
+  })
+  .error(function(data, status, headers, config) {
+    alert("FK");
+  });
 
   // this region is login logic....
   $scope.logindata = {};
@@ -52,9 +57,7 @@ angular.module('colorgytable.controllers', ['ngOpenFB'])
     facebookConnectPlugin.login( ["email"], 
       function (response) { 
         // success
-        alert(JSON.stringify(response)) 
         var token = response.authResponse.accessToken;
-        alert(token);
         var postData = {
           grant_type: "password",
           // 應用程式ID application id, in colorgy server
@@ -64,14 +67,7 @@ angular.module('colorgytable.controllers', ['ngOpenFB'])
           password: token,
           scope: "public account offline_access"
         };
-        $http.post('https://colorgy.io/oauth/token', postData)
-        .success(function(data, status, headers, config) {
-          alert("success post");
-          alert(data);
-        })
-        .error(function(data, status, headers, config) {
-          alert("fuck post");
-        });
+        $scope.postAndGetAccessToken(postData);
       },
       function (response) { 
         // fail
@@ -92,6 +88,59 @@ angular.module('colorgytable.controllers', ['ngOpenFB'])
     //             alert('Facebook login failed');
     //         }
     //     });
+  };
+
+  $scope.postAndGetAccessToken = function(postData) {
+    // get access token.
+    $http.post('https://colorgy.io/oauth/token', postData)
+    .success(function(data, status, headers, config) {
+      // store access token
+      alert("ok post");
+      window.localStorage['ColorgyAccessToken'] = data.access_token;
+      window.localStorage['ColorgyRefreshToken'] = data.refresh_token;
+      // get personally information
+      var token = window.localStorage['ColorgyAccessToken'];
+      // $scope.userSuccessfullyLoginToColorgyWithToken(token);
+      // testing get method....
+      var url = "https://colorgy.io/api/v1/me?access_token=" + token;
+      console.log("url is " + url);
+      $http.get(url)
+      .success(function(data, status, headers, config) {
+        window.localStorage['userName'] = data.name;
+        window.localStorage['userSchool'] = data.organization;
+        window.localStorgae['isLogin'] = true;
+        window.localStroage['loginType'] = "fb";
+        // login ok.
+        alert("OK");
+        $scope.modal.hide();
+      })
+      .error(function(data, status, headers, config) {
+        alert("FK");
+      });
+    })
+    .error(function(data, status, headers, config) {
+      alert("fuck post");
+    });
+  };
+
+  $scope.userSuccessfullyLoginToColorgyWithToken = function(access_token) {
+    // get personally information
+    var token = access_token;
+    var url = "https://colorgy.io/api/v1/me?access_token=" + token;
+    console.log("url is " + url);
+    $http.get(url)
+    .success(function(data, status, headers, config) {
+      window.localStorage['userName'] = data.name;
+      window.localStorage['userSchool'] = data.organization;
+      window.localStorgae['isLogin'] = true;
+      window.localStroage['loginType'] = "fb";
+      // login ok.
+      alert("OK");
+      $scope.modal.hide();
+    })
+    .error(function(data, status, headers, config) {
+      alert("FK");
+    });
   };
 
 })
