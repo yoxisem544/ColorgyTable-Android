@@ -2,6 +2,7 @@ angular.module('colorgytable.controllers', ['ngOpenFB'])
 
 .controller('MenuCtrl', function($scope, $ionicModal, ngFB, $http) {
 
+  alert("something" + window.localStorage['isLogin']);
   // detect if user is logged in.
   if (!window.localStorage['isLogin']) {
     console.log("user login state: not yet logged in.");
@@ -16,23 +17,6 @@ angular.module('colorgytable.controllers', ['ngOpenFB'])
   } else {
     console.log("user login state: user logged in.");
   }
-
-  // test get
-  var url = "https://colorgy.io/api/v1/me?access_token=7f3d12b83ab4669397e17c689560cfa9770b21a05dcc3ddf05de3f0978ee18a3b56e67c3f3fac8052c6679999fcad1898185baae385711d2f18c6e4091d150c5"
-  console.log("url is " + url);
-  $http.get(url)
-  .success(function(data, status, headers, config) {
-    window.localStorage['userName'] = data.name;
-    window.localStorage['userSchool'] = data.organization;
-    window.localStorage['isLogin'] = true;
-    window.localStroage['loginType'] = 'fb';
-    // login ok.
-    alert("OK");
-    $scope.modal.hide();
-  })
-  .error(function(data, status, headers, config) {
-    alert("FK");
-  });
 
   // this region is login logic....
   $scope.logindata = {};
@@ -100,23 +84,7 @@ angular.module('colorgytable.controllers', ['ngOpenFB'])
       window.localStorage['ColorgyRefreshToken'] = data.refresh_token;
       // get personally information
       var token = window.localStorage['ColorgyAccessToken'];
-      // $scope.userSuccessfullyLoginToColorgyWithToken(token);
-      // testing get method....
-      var url = "https://colorgy.io/api/v1/me?access_token=" + token;
-      console.log("url is " + url);
-      $http.get(url)
-      .success(function(data, status, headers, config) {
-        window.localStorage['userName'] = data.name;
-        window.localStorage['userSchool'] = data.organization;
-        window.localStorgae['isLogin'] = true;
-        window.localStroage['loginType'] = "fb";
-        // login ok.
-        alert("OK");
-        $scope.modal.hide();
-      })
-      .error(function(data, status, headers, config) {
-        alert("FK");
-      });
+      $scope.userSuccessfullyLoginToColorgyWithToken(token);
     })
     .error(function(data, status, headers, config) {
       alert("fuck post");
@@ -143,4 +111,16 @@ angular.module('colorgytable.controllers', ['ngOpenFB'])
     });
   };
 
+})
+
+.controller('MainCtrl', function($scope) {
+
+  $scope.logout = function() {
+    alert("main");
+    window.localStorage.removeItem("userName");
+    window.localStorage.removeItem("userSchool");
+    window.localStorgae.removeItem("isLogin");
+    window.localStroage.removeItem("loginType");
+    alert(window.localStorage['isLogin']);
+  }
 })

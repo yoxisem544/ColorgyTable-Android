@@ -43,7 +43,8 @@ angular.module('colorgytable', ['ionic', 'colorgytable.controllers', 'ngOpenFB']
     url: '/main',
     views: {
       'menuContent': {
-        templateUrl: "views/main.html"
+        templateUrl: "views/main.html",
+        controller: "MainCtrl"
       }
     }
   })
