@@ -1,6 +1,6 @@
-angular.module('colorgytable.controllers', ['ngOpenFB'])
+angular.module('colorgytable.controllers', [])
 
-.controller('MenuCtrl', function($scope, $ionicModal, ngFB, $http) {
+.controller('MenuCtrl', function($scope, $ionicModal, $http) {
 
   alert("something" + window.localStorage['isLogin']);
   // detect if user is logged in.
@@ -13,6 +13,7 @@ angular.module('colorgytable.controllers', ['ngOpenFB'])
       $scope.modal = modal;
       // if modal is ready to show, show it.
       $scope.modal.show();
+      // $scope.connecting_fb = true;
     });
   } else {
     console.log("user login state: user logged in.");
@@ -33,8 +34,12 @@ angular.module('colorgytable.controllers', ['ngOpenFB'])
   // fb region
   $scope.fbLogin = function() {
 
+    // lock button
+    $scope.connecting_fb = true;
+
     // cordova fb login test
     if (!window.cordova) {
+      // this part seems to be users that haven't install fb on their device.
       var appId = prompt("Enter FB Application ID", "");
       facebookConnectPlugin.browserInit(appId);
     }
@@ -55,7 +60,10 @@ angular.module('colorgytable.controllers', ['ngOpenFB'])
       },
       function (response) { 
         // fail
-        alert(JSON.stringify(response)) 
+        // alert(JSON.stringify(response));
+        alert("error login to fb");
+        // unlock button
+        $scope.connecting_fb = false;
       });
                 
     // ngFB.login({scope: 'email'}).then(
@@ -87,7 +95,9 @@ angular.module('colorgytable.controllers', ['ngOpenFB'])
       $scope.userSuccessfullyLoginToColorgyWithToken(token);
     })
     .error(function(data, status, headers, config) {
-      alert("fuck post");
+      alert("communicate with colorgy failed....");
+      // unlock button
+      $scope.connecting_fb = false;
     });
   };
 
@@ -100,14 +110,16 @@ angular.module('colorgytable.controllers', ['ngOpenFB'])
     .success(function(data, status, headers, config) {
       window.localStorage['userName'] = data.name;
       window.localStorage['userSchool'] = data.organization;
-      window.localStorgae['isLogin'] = true;
-      window.localStroage['loginType'] = "fb";
+      window.localStorage['isLogin'] = true;
+      window.localStorage['loginType'] = "fb";
       // login ok.
       alert("OK");
       $scope.modal.hide();
     })
     .error(function(data, status, headers, config) {
       alert("FK");
+      // unlock button
+      $scope.connecting_fb = false;
     });
   };
 
@@ -117,10 +129,11 @@ angular.module('colorgytable.controllers', ['ngOpenFB'])
 
   $scope.logout = function() {
     alert("main");
-    window.localStorage.removeItem("userName");
-    window.localStorage.removeItem("userSchool");
-    window.localStorgae.removeItem("isLogin");
-    window.localStroage.removeItem("loginType");
     alert(window.localStorage['isLogin']);
-  }
-})
+    window.localStorage.removeItem('userName');
+    window.localStorage.removeItem('userSchool');
+    window.localStorage.removeItem('isLogin');
+    window.localStorage.removeItem('loginType');
+    alert(window.localStorage['isLogin']);
+  };
+});
