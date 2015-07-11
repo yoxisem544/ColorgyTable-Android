@@ -1,5 +1,11 @@
 <ion-view view-title="選課">
   <ion-content>
-    this is timetable view.選課
+    <ion-list>
+      <div class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search">
+      </div>
+      <ion-item ng-repeat="c in data">{{c}}</ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

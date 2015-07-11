@@ -68,7 +68,8 @@ angular.module('colorgytable', ['ionic', 'colorgytable.controllers'])
     url: '/search_course',
     views: {
       'menuContent': {
-        templateUrl: "views/search_course.html"
+        templateUrl: "views/search_course.html",
+        controller: "SearchCourseCtrl"
       }
     }
   });

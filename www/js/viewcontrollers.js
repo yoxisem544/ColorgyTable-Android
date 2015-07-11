@@ -19,6 +19,9 @@ angular.module('colorgytable.controllers', [])
     console.log("user login state: user logged in.");
   }
 
+  // test course
+  $scope.coursedata = ['1', '1', '2'];
+
   // this region is login logic....
   $scope.logindata = {};
   $scope.closeButton = function() {
@@ -125,7 +128,7 @@ angular.module('colorgytable.controllers', [])
 
 })
 
-.controller('MainCtrl', function($scope) {
+.controller('MainCtrl', function($scope, $http) {
 
   $scope.logout = function() {
     alert("main");
@@ -136,4 +139,35 @@ angular.module('colorgytable.controllers', [])
     window.localStorage.removeItem('loginType');
     alert(window.localStorage['isLogin']);
   };
+
+  $scope.download_course = function() {
+    var front_url = "https://colorgy.io:443/api/";
+    var middle_url = "/courses.json?per_page=1500&&&&&access_token=";
+    var token = window.localStorage["ColorgyAccessToken"];
+    var url = front_url + 'ntust' + middle_url + token;
+    alert(JSON.stringify(url));
+    $http.get(url)
+    .success(function(data, status, headers, config) {
+      alert("ok getting course");
+      window.localStorage['CourseData'] = JSON.stringify(data);
+      alert(data.length);
+      alert(window.localStorage['CourseData'].length);
+    })
+    .error(function(data, status, headers, config) {
+      alert("fail get course");
+    });
+  };
+
+  $scope.chechLength = function() {
+    var course = window.localStorage['CourseData'];
+    alert(course.length);
+  };
+})
+
+.controller('SearchCourseCtrl', function($scope) {
+  var data = window.localStorage["CourseData"];
+  // alert(data);
+  var course = JSON.parse(data);
+  alert(course.length);
+  // $scope.data = course;
 });
