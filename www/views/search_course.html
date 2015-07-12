@@ -3,9 +3,11 @@
     <ion-list>
       <div class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="text" placeholder="Search">
+        <input type="text" placeholder="Search" ng-model="searchCourseText">
       </div>
-      <ion-item ng-repeat="c in data">{{c}}</ion-item>
+      <ion-item ng-repeat="(k, v) in data | filter:searchCourseText">
+        {{v.name}}
+      </ion-item>
     </ion-list>
   </ion-content>
 </ion-view>
