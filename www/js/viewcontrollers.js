@@ -164,7 +164,7 @@ angular.module('colorgytable.controllers', [])
   };
 })
 
-.controller('SearchCourseCtrl', function($scope) {
+.controller('SearchCourseCtrl', function($scope, $timeout) {
   var data = window.localStorage["CourseData"];
   // alert(data);
   $scope.course = JSON.parse(data);
@@ -173,14 +173,26 @@ angular.module('colorgytable.controllers', [])
   $scope.data = undefined;
 
   $scope.searchCourseText = {};
+  var searchTimeout;
+
+  $scope.$watch('searchCourseText', function(val) {
+    console.log(val);
+  });
 
   $scope.searchTextChanged = function() {
+    console.log($scope.searchCourseText.text);
     if ($scope.searchCourseText.text === "") {
+      console.log("yoss");
       $scope.data = undefined;
     } else {
-      if ($scope.data === undefined) {
-        $scope.data = $scope.course;
-      }
+      console.log("yo");
+      if (searchTimeout) $timeout.cancel(searchTimeout);
+      searchTimeout = $timeout(function() {
+        $scope.searchCourseText.delaytext = $scope.searchCourseText.text;
+        if ($scope.data === undefined && $scope.searchCourseText.text !== "") {
+          $scope.data = $scope.course;
+        }
+      }, 1000);
     }
   };
 });
