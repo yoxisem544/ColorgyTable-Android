@@ -142,7 +142,7 @@ angular.module('colorgytable.controllers', [])
 
   $scope.download_course = function() {
     var front_url = "https://colorgy.io:443/api/";
-    var middle_url = "/courses.json?per_page=150&&&fields=code%2Cyear%2Cname%2Clecturer&&access_token=";
+    var middle_url = "/courses.json?per_page=3000&&filter%5Byear%5D=2015&filter%5Bterm%5D=1&fields=code%2Cyear%2Cname%2Clecturer&&access_token=";
     var token = window.localStorage["ColorgyAccessToken"];
     var url = front_url + 'ntust' + middle_url + token;
     alert(JSON.stringify(url));
@@ -167,9 +167,20 @@ angular.module('colorgytable.controllers', [])
 .controller('SearchCourseCtrl', function($scope) {
   var data = window.localStorage["CourseData"];
   // alert(data);
-  var course = JSON.parse(data);
-  alert(course.length);
-  $scope.data = course;
+  $scope.course = JSON.parse(data);
+  alert($scope.course.length);
+  // $scope.data = $scope.course;
+  $scope.data = undefined;
 
-  $scope.searchCourseText = "";
+  $scope.searchCourseText = {};
+
+  $scope.searchTextChanged = function() {
+    if ($scope.searchCourseText.text === "") {
+      $scope.data = undefined;
+    } else {
+      if ($scope.data === undefined) {
+        $scope.data = $scope.course;
+      }
+    }
+  };
 });
