@@ -195,4 +195,8 @@ angular.module('colorgytable.controllers', [])
       }, 1000);
     }
   };
+
+  $scope.list_click = function(indexPath) {
+    alert(JSON.stringify(indexPath));
+  };
 });
