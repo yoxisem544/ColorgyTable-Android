@@ -2,7 +2,6 @@ angular.module('colorgytable.controllers', [])
 
 .controller('MenuCtrl', function($scope, $ionicModal, $http) {
 
-  alert("something" + window.localStorage['isLogin']);
   // detect if user is logged in.
   if (!window.localStorage['isLogin']) {
     console.log("user login state: not yet logged in.");
@@ -164,7 +163,7 @@ angular.module('colorgytable.controllers', [])
   };
 })
 
-.controller('SearchCourseCtrl', function($scope, $timeout) {
+.controller('SearchCourseCtrl', function($scope, $timeout, $ionicScrollDelegate) {
   var data = window.localStorage["CourseData"];
   // alert(data);
   $scope.course = JSON.parse(data);
@@ -174,6 +173,8 @@ angular.module('colorgytable.controllers', [])
 
   $scope.searchCourseText = {};
   var searchTimeout;
+
+  $scope.totalDisplayedCourses = 30;
 
   $scope.$watch('searchCourseText', function(val) {
     console.log(val);
@@ -198,5 +199,10 @@ angular.module('colorgytable.controllers', [])
 
   $scope.list_click = function(indexPath) {
     alert(JSON.stringify(indexPath));
+  };
+
+  $scope.alertScroll = function() {
+    alert($ionicScrollDelegate.$getByHandle('course_scroll').getScrollPosition().top);
+    $scope.searchCourseText.scrollOffset = $ionicScrollDelegate.getScrollPosition().top;
   };
 });
