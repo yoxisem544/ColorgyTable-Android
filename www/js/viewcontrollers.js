@@ -174,25 +174,36 @@ angular.module('colorgytable.controllers', [])
   $scope.searchCourseText = {};
   var searchTimeout;
 
+  // initial max display size, set to 30
   $scope.totalDisplayedCourses = 30;
+  // card height
+  $scope.cardHeight = 70;
 
   $scope.$watch('searchCourseText', function(val) {
     console.log(val);
   });
 
   $scope.searchTextChanged = function() {
+    // everytime search text changed.
     console.log($scope.searchCourseText.text);
     if ($scope.searchCourseText.text === "") {
       console.log("yoss");
+      // empty data.
       $scope.data = undefined;
     } else {
       console.log("yo");
+      // cancel last requset if user fire another request.
       if (searchTimeout) $timeout.cancel(searchTimeout);
       searchTimeout = $timeout(function() {
+        // set delayed text to real filter.
         $scope.searchCourseText.delaytext = $scope.searchCourseText.text;
+        // set max display size to 30 everytime user search.
+        $scope.totalDisplayedCourses = 30;
         if ($scope.data === undefined && $scope.searchCourseText.text !== "") {
+          // when data is empty and user did input something, set data.
           $scope.data = $scope.course;
         }
+        // set text after 1 second delay.
       }, 1000);
     }
   };
@@ -201,8 +212,12 @@ angular.module('colorgytable.controllers', [])
     alert(JSON.stringify(indexPath));
   };
 
-  $scope.alertScroll = function() {
-    alert($ionicScrollDelegate.$getByHandle('course_scroll').getScrollPosition().top);
-    $scope.searchCourseText.scrollOffset = $ionicScrollDelegate.getScrollPosition().top;
+  $scope.onScroll = function() {
+    // you must set delegate by $getByHandle, or nothing will happen.
+    var top = $ionicScrollDelegate.$getByHandle('course_scroll').getScrollPosition().top;
+    if (top >= (($scope.totalDisplayedCourses - 15) * $scope.cardHeight)) {
+      $scope.totalDisplayedCourses += 30;
+    }
+
   };
 });
