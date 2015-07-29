@@ -1,0 +1,29 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">登入Colorgy</h1>
+    <div class="buttons"><button class="button button-clear" ng-click="closeButton()">close</button></div>
+  </ion-header-bar>
+  <ion-content scroll="false">
+  <div class="list">
+      <form ng-submit="doLogin()">
+        <label for="" class="item item-input">
+          <span class="input-label">Username</span>
+          <input type="text" ng-model="logindata.username">
+        </label>
+        <label for="" class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" ng-model="logindata.password">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Log in</button>
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" ng-click="fbLogin()" ng-disabled="connecting_fb">
+            Login with Facebook
+          </button>
+        </label>
+      </form>
+    </div>
+  </ion-content>
+
+</ion-modal-view>

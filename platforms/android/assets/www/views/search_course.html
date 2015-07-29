@@ -1,0 +1,14 @@
+<ion-view view-title="選課">
+  <ion-content delegate-handle="course_scroll" on-scroll="onScroll()">
+    <div class="list">
+      <div class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search" ng-model="searchCourseText.text" ng-change="searchTextChanged()">
+      </div>
+      <ion-item ng-repeat="(k, v) in data | filter:searchCourseText.delaytext | limitTo:totalDisplayedCourses" ng-click="list_click(v)" ng-style="{'height': '70px'}">
+        {{v.name}} - {{v.code}}
+      </ion-item>
+      <button class="button button-positive" ng-click="alertScroll()">get top</button>
+    </div>
+  </ion-content>
+</ion-view>
