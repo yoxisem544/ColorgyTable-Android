@@ -5,7 +5,7 @@ angular.module('colorgytable.controllers', [])
   // detect if user is logged in.
   if (!window.localStorage['isLogin']) {
     console.log("user login state: not yet logged in.");
-    $ionicModal.fromTemplateUrl('views/login.html', {
+    $ionicModal.fromTemplateUrl('templates/login.html', {
       scope: $scope,
       backdropClickToClose: false
     }).then(function(modal) {
@@ -45,8 +45,8 @@ angular.module('colorgytable.controllers', [])
       var appId = prompt("Enter FB Application ID", "");
       facebookConnectPlugin.browserInit(appId);
     }
-    facebookConnectPlugin.login( ["email"], 
-      function (response) { 
+    facebookConnectPlugin.login( ["email"],
+      function (response) {
         // success
         var token = response.authResponse.accessToken;
         var postData = {
@@ -60,14 +60,14 @@ angular.module('colorgytable.controllers', [])
         };
         $scope.postAndGetAccessToken(postData);
       },
-      function (response) { 
+      function (response) {
         // fail
         // alert(JSON.stringify(response));
         alert("error login to fb");
         // unlock button
         $scope.connecting_fb = false;
       });
-                
+
     // ngFB.login({scope: 'email'}).then(
     //     function (response) {
     //         if (response.status === 'connected') {
@@ -167,7 +167,7 @@ angular.module('colorgytable.controllers', [])
   var data = window.localStorage["CourseData"];
   // alert(data);
   $scope.course = JSON.parse(data);
-  alert($scope.course.length);
+  //alert($scope.course.length);
   // $scope.data = $scope.course;
   $scope.data = undefined;
 

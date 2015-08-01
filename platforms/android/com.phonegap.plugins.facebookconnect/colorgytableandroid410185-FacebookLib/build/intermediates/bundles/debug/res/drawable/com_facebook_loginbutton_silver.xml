@@ -21,4 +21,4 @@
           android:drawable="@drawable/com_facebook_button_grey_focused" />
     <item android:drawable="@drawable/com_facebook_button_grey_normal" />
 </selector>
-<!-- From: file:/Users/David/Desktop/ColorgyTable-Android/ColorgyTable-Android/platforms/android/com.phonegap.plugins.facebookconnect/colorgytableandroid410185-FacebookLib/res/drawable/com_facebook_loginbutton_silver.xml -->
+<!-- From: file:/Users/Lucas/Project/ColorgyTable-Android/platforms/android/com.phonegap.plugins.facebookconnect/colorgytableandroid410185-FacebookLib/res/drawable/com_facebook_loginbutton_silver.xml -->

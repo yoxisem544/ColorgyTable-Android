@@ -39,15 +39,6 @@ angular.module('colorgytable', ['ionic', 'colorgytable.controllers'])
     templateUrl: "views/menu.html",
     controller: 'MenuCtrl'
   })
-  .state('app.main', {
-    url: '/main',
-    views: {
-      'menuContent': {
-        templateUrl: "views/main.html",
-        controller: "MainCtrl"
-      }
-    }
-  })
   .state('app.timetable', {
     url: '/timetable',
     views: {
@@ -72,7 +63,66 @@ angular.module('colorgytable', ['ionic', 'colorgytable.controllers'])
         controller: "SearchCourseCtrl"
       }
     }
-  });
+  })
+    .state('tabs', {
+      url: "/tab",
+      abstract: true,
+      templateUrl: "templates/tabs.html"
+    })
+    .state('tabs.home', {
+      url: "/home",
+      views: {
+        'home-tab': {
+          templateUrl: "templates/home.html",
+          controller: 'HomeTabCtrl'
+        }
+      }
+    })
+    .state('tabs.facts', {
+      url: "/facts",
+      views: {
+        'home-tab': {
+          templateUrl: "templates/facts.html"
+        }
+      }
+    })
+    .state('tabs.facts2', {
+      url: "/facts2",
+      views: {
+        'home-tab': {
+          templateUrl: "templates/facts2.html"
+        }
+      }
+    })
+    .state('tabs.about', {
+      url: "/about",
+      views: {
+        'about-tab': {
+          templateUrl: "templates/about.html"
+        }
+      }
+    })
+    .state('tabs.navstack', {
+      url: "/navstack",
+      views: {
+        'about-tab': {
+          templateUrl: "templates/nav-stack.html"
+        }
+      }
+    })
+    .state('tabs.main', {
+      url: "/about",
+      views: {
+        'contact-tab': {
+          templateUrl: "templates/main.html",
+          controller: 'MainCtrl'
+        }
+      }
+    });
 
-  $urlRouterProvider.otherwise("/app/main");
+
+   $urlRouterProvider.otherwise("/tab/home");
 })
+.controller('HomeTabCtrl', function($scope) {
+  console.log('HomeTabCtrl');
+});

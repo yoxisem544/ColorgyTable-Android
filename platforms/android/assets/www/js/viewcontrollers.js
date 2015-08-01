@@ -45,8 +45,8 @@ angular.module('colorgytable.controllers', [])
       var appId = prompt("Enter FB Application ID", "");
       facebookConnectPlugin.browserInit(appId);
     }
-    facebookConnectPlugin.login( ["email"], 
-      function (response) { 
+    facebookConnectPlugin.login( ["email"],
+      function (response) {
         // success
         var token = response.authResponse.accessToken;
         var postData = {
@@ -60,14 +60,14 @@ angular.module('colorgytable.controllers', [])
         };
         $scope.postAndGetAccessToken(postData);
       },
-      function (response) { 
+      function (response) {
         // fail
         // alert(JSON.stringify(response));
         alert("error login to fb");
         // unlock button
         $scope.connecting_fb = false;
       });
-                
+
     // ngFB.login({scope: 'email'}).then(
     //     function (response) {
     //         if (response.status === 'connected') {
@@ -217,7 +217,6 @@ angular.module('colorgytable.controllers', [])
     var top = $ionicScrollDelegate.$getByHandle('course_scroll').getScrollPosition().top;
     if (top >= (($scope.totalDisplayedCourses - 15) * $scope.cardHeight)) {
       $scope.totalDisplayedCourses += 30;
-      alert("expanding now is " + $scope.totalDisplayedCourses + "\nand position is " + top);
     }
 
   };

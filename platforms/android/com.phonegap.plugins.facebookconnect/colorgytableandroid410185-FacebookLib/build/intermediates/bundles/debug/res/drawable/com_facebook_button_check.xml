@@ -18,4 +18,4 @@
   <item android:state_checked="true" android:drawable="@drawable/com_facebook_button_check_on" />
   <item android:drawable="@drawable/com_facebook_button_check_off" />
 </selector>
-<!-- From: file:/Users/David/Desktop/ColorgyTable-Android/ColorgyTable-Android/platforms/android/com.phonegap.plugins.facebookconnect/colorgytableandroid410185-FacebookLib/res/drawable/com_facebook_button_check.xml -->
+<!-- From: file:/Users/Lucas/Project/ColorgyTable-Android/platforms/android/com.phonegap.plugins.facebookconnect/colorgytableandroid410185-FacebookLib/res/drawable/com_facebook_button_check.xml -->

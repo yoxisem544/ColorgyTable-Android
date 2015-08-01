@@ -36,23 +36,14 @@ angular.module('colorgytable', ['ionic', 'colorgytable.controllers'])
   .state('app', {
     url: '/app',
     abstract: true,
-    templateUrl: "views/menu.html",
+    templateUrl: "templates/menu.html",
     controller: 'MenuCtrl'
-  })
-  .state('app.main', {
-    url: '/main',
-    views: {
-      'menuContent': {
-        templateUrl: "views/main.html",
-        controller: "MainCtrl"
-      }
-    }
   })
   .state('app.timetable', {
     url: '/timetable',
     views: {
       'menuContent': {
-        templateUrl: "views/timetable.html"
+        templateUrl: "templates/timetable.html"
       }
     }
   })
@@ -60,19 +51,60 @@ angular.module('colorgytable', ['ionic', 'colorgytable.controllers'])
     url: '/profile',
     views: {
       'menuContent': {
-        templateUrl: "views/profile.html"
+        templateUrl: "templates/profile.html"
       }
     }
   })
-  .state('app.search_course', {
-    url: '/search_course',
-    views: {
-      'menuContent': {
-        templateUrl: "views/search_course.html",
-        controller: "SearchCourseCtrl"
+  .state('tabs', {
+      url: "/tab",
+      abstract: true,
+      templateUrl: "templates/tabs.html"
+    })
+    .state('tabs.home', {
+      url: "/home",
+      views: {
+        'home-tab': {
+          templateUrl: "templates/home.html",
+          controller: 'HomeTabCtrl'
+        }
       }
-    }
-  });
-
-  $urlRouterProvider.otherwise("/app/main");
+    })
+    .state('tabs.search_course', {
+      url: "/search_course",
+      views: {
+        'home-tab': {
+          templateUrl: "templates/search_course.html",
+          controller: "SearchCourseCtrl"
+        }
+      }
+    })
+    .state('tabs.about', {
+      url: "/about",
+      views: {
+        'about-tab': {
+          templateUrl: "templates/about.html"
+        }
+      }
+    })
+    .state('tabs.navstack', {
+      url: "/navstack",
+      views: {
+        'about-tab': {
+          templateUrl: "templates/nav-stack.html"
+        }
+      }
+    })
+    .state('tabs.main', {
+      url: "/main",
+      views: {
+        'main-tab': {
+          templateUrl: "templates/main.html",
+          controller: 'MainCtrl'
+        }
+      }
+    });
+    $urlRouterProvider.otherwise("/tab/home");
 })
+.controller('HomeTabCtrl', function($scope) {
+  console.log('HomeTabCtrl');
+});

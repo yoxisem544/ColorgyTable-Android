@@ -61,4 +61,4 @@
             android:layout_marginRight="10dip"
             android:layout_toLeftOf="@id/com_facebook_picker_divider"/>
 </RelativeLayout>
-<!-- From: file:/Users/David/Desktop/ColorgyTable-Android/ColorgyTable-Android/platforms/android/com.phonegap.plugins.facebookconnect/colorgytableandroid410185-FacebookLib/res/layout/com_facebook_picker_title_bar.xml -->
+<!-- From: file:/Users/Lucas/Project/ColorgyTable-Android/platforms/android/com.phonegap.plugins.facebookconnect/colorgytableandroid410185-FacebookLib/res/layout/com_facebook_picker_title_bar.xml -->
