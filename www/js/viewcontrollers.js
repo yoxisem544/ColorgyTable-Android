@@ -62,7 +62,7 @@ angular.module('colorgytable.controllers', [])
       },
       function (response) {
         // fail
-        // alert(JSON.stringify(response));
+        // alert(JSON.stringify(response, null, '  '));
         alert("error login to fb");
         // unlock button
         $scope.connecting_fb = false;
@@ -130,13 +130,10 @@ angular.module('colorgytable.controllers', [])
 .controller('MainCtrl', function($scope, $http) {
 
   $scope.logout = function() {
-    alert("main");
-    alert(window.localStorage['isLogin']);
     window.localStorage.removeItem('userName');
     window.localStorage.removeItem('userSchool');
     window.localStorage.removeItem('isLogin');
     window.localStorage.removeItem('loginType');
-    alert(window.localStorage['isLogin']);
   };
 
   $scope.download_course = function() {
@@ -144,11 +141,11 @@ angular.module('colorgytable.controllers', [])
     var middle_url = "/courses.json?per_page=3000&&filter%5Byear%5D=2015&filter%5Bterm%5D=1&fields=code%2Cyear%2Cname%2Clecturer&&access_token=";
     var token = window.localStorage["ColorgyAccessToken"];
     var url = front_url + 'ntust' + middle_url + token;
-    alert(JSON.stringify(url));
+    alert(JSON.stringify(url, null, '  '));
     $http.get(url)
     .success(function(data, status, headers, config) {
       alert("ok getting course");
-      window.localStorage['CourseData'] = JSON.stringify(data);
+      window.localStorage['CourseData'] = JSON.stringify(data, null, '  ');
       alert(data.length);
       alert(window.localStorage['CourseData'].length);
     })
@@ -161,11 +158,221 @@ angular.module('colorgytable.controllers', [])
     var course = window.localStorage['CourseData'];
     alert(course.length);
   };
+
+// init test object that can save testing ng-models
+  $scope.test = {};
+  $scope.saveAccesstoken = function() {
+    window.localStorage["ColorgyAccessToken"] = $scope.test.accesstoken;
+  };
+  $scope.me = function() {
+    var front_url = "https://colorgy.io:443/api/v1/me.json?access_token=";
+    var accessToken = window.localStorage["ColorgyAccessToken"];
+    if (accessToken) {
+      $http.get(front_url + accessToken)
+      .success(function(data, status, headers, config) {
+        $scope.test.display_result = JSON.stringify(data, null, '  ');
+      })
+      .error(function(data, status, headers, config) {
+        console.error("error");
+        console.error(data);
+      }); 
+    } else {
+      console.error("no access token");
+    }
+  };
+  $scope.getCourseInfo = function() {
+    var front_url = "https://colorgy.io:443/api/v1/";
+    var school = $scope.test.school;
+    var code = $scope.test.course_code;
+    var middle_url = "/courses.json?filter%5Bcode%5D=" + code + "&&&&&&&access_token=";
+    var accessToken = window.localStorage["ColorgyAccessToken"];
+    var url = front_url + school + middle_url + accessToken;
+    if (typeof accessToken === 'undefined') {
+      console.error("no token");
+      return;
+    }
+
+    if (typeof school === 'undefined') {
+      console.error("school error");
+      return;
+    }
+
+    $http.get(url)
+    .success(function(data, status, headers, config) {
+      $scope.test.display_result = JSON.stringify(data, null, '  ');
+    })
+    .error(function(data, status, headers, config) {
+      console.error("error");
+      console.error(data);
+    });     
+  };
+  $scope.getUserAvatar = function() {
+    var front_url = "https://colorgy.io:443/api/v1/users.json?filter%5Bid%5D=";
+    var id = $scope.test.userid;
+    var middle_url = "&&&&&&&&&&&&&access_token=";
+    var accessToken = window.localStorage["ColorgyAccessToken"];
+    var url = front_url + id + middle_url + accessToken;
+    console.log(url);
+    if (typeof accessToken === 'undefined') {
+      console.error("no token");
+      return;
+    }
+    if (id === "" || typeof id === 'undefined') {
+      console.error("you should specify a id, or all users will be dump out");
+      return;
+    }
+
+    $http.get(url)
+    .success(function(data, status, headers, config) {
+      $scope.test.display_result = JSON.stringify(data, null, '  ');
+    })
+    .error(function(data, status, headers, config) {
+      console.error("error");
+      console.error(data);
+    }); 
+
+  };
+
+  $scope.getUserCourses = function() {
+    var front_url = "https://colorgy.io:443/api/v1/user_courses.json?filter%5Buser_id%5D=";
+    var id = $scope.test.userid;
+    var middle_url = "&&&&&&&&&&&&&access_token=";
+    var accessToken = window.localStorage["ColorgyAccessToken"];
+    var url = front_url + id + middle_url + accessToken;
+    console.log(url);
+    if (typeof accessToken === 'undefined') {
+      console.error("no token");
+      return;
+    }
+    if (id === "" || typeof id === 'undefined') {
+      console.error("you need a id");
+      return;
+    }
+
+    $http.get(url)
+    .success(function(data, status, headers, config) {
+      $scope.test.display_result = JSON.stringify(data, null, '  ');
+    })
+    .error(function(data, status, headers, config) {
+      console.error("error");
+      console.error(data);
+    }); 
+
+  };
+
+  $scope.getCourseClassmates = function() {
+    var front_url = "https://colorgy.io/api/v1/user_courses.json?filter%5Bcourse_code%5D=";
+    var course_code = $scope.test.course_code;
+    var middle_url = "&&&&&&&&&access_token=";
+    var url = front_url + course_code + middle_url;
+    if (course_code === "" | typeof course_code === 'undefined') {
+      console.error("no course code");
+      return;
+    }
+
+    $http.get(url)
+    .success(function(data, status, headers, config) {
+      $scope.test.display_result = JSON.stringify(data, null, '  ');
+    })
+    .error(function(data, status, headers, config) {
+      console.error("error");
+      console.error(data);
+    });
+
+  };
+
+  $scope.putCourse = function() {
+    if (!$scope.test.user.course_code) {
+      console.error("no course code");
+      return;
+    }
+    if (!$scope.test.user.course_org) {
+      console.error("no course org");
+      return;
+    }
+    if (!$scope.test.user.year) {
+      console.error("no course year");
+      return;
+    }
+    if (!$scope.test.user.term) {
+      console.error("no course term");
+      return;
+    }
+    if (!$scope.test.user.uuid) {
+      console.error("no uuid");
+      return;
+    }
+    var uuid = $scope.test.user.uuid;
+    var front_url = "https://colorgy.io:443/api/v1/me/user_courses/" + uuid + ".json?access_token=";
+    var accessToken = window.localStorage["ColorgyAccessToken"];
+    var url = front_url + accessToken;
+    var params = {
+      'user_courses': {
+        'course_code': $scope.test.user.course_code,
+        'course_organization_code': $scope.test.user.course_org,
+        'year': parseInt($scope.test.user.year),
+        'term': parseInt($scope.test.user.term)
+      }
+      // 'user_courses[course_code]': $scope.test.user.course_code,
+      // 'user_courses[course_organization_code]': $scope.test.user.course_org,
+      // 'user_courses[year]': parseInt($scope.test.user.year),
+      // 'user_courses[term]': parseInt($scope.test.user.term)
+    };
+    console.log(params);
+    // $http.put(url, params, {"Content-Type": "application/x-www-form-urlencoded"})
+    // .success(function(data, status, headers, config) {
+    //   console.log("PUT: " + $scope.user.course_code);
+    // })
+    // .error(function(data, status, headers, config) {
+    //   console.error("error");
+    //   console.error(data);
+    // });
+    $http({
+      url: url,
+      method: "PUT",
+      data: params
+    })
+    .then(function(res) {
+      console.log("ok");
+      console.log(res);
+    }, function(res) {
+      console.error(res);
+    });
+  };
+
+  $scope.deleteCourse = function() {
+    if (!$scope.user.course_code) {
+      console.error("no course code");
+      return;
+    }
+    if (!$scope.user.course_org) {
+      console.error("no course org");
+      return;
+    }
+    if (!$scope.user.year) {
+      console.error("no course year");
+      return;
+    }
+    if (!$scope.user.term) {
+      console.error("no course term");
+      return;
+    }
+
+    $http.get(url)
+    .success(function(data, status, headers, config) {
+      console.log("DELETE: " + $scope.user.course_code);
+    })
+    .error(function(data, status, headers, config) {
+      console.error("error");
+      console.error(data);
+    });
+  };
 })
 
 .controller('SearchCourseCtrl', function($scope, $timeout, $ionicScrollDelegate) {
   var data = window.localStorage["CourseData"];
   // alert(data);
+  console.log(data);
   $scope.course = JSON.parse(data);
   //alert($scope.course.length);
   // $scope.data = $scope.course;
@@ -209,7 +416,7 @@ angular.module('colorgytable.controllers', [])
   };
 
   $scope.list_click = function(indexPath) {
-    alert(JSON.stringify(indexPath));
+    alert(JSON.stringify(indexPath, null, '  '));
   };
 
   $scope.onScroll = function() {
