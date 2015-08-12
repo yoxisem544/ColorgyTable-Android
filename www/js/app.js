@@ -65,7 +65,7 @@ angular.module('colorgytable', ['ionic', 'colorgytable.controllers'])
       views: {
         'home-tab': {
           templateUrl: "templates/home.html",
-          controller: 'HomeTabCtrl'
+          controller: 'HomeTabCtrl',
         }
       }
     })
@@ -104,7 +104,4 @@ angular.module('colorgytable', ['ionic', 'colorgytable.controllers'])
       }
     });
     $urlRouterProvider.otherwise("/tab/home");
-})
-.controller('HomeTabCtrl', function($scope) {
-  console.log('HomeTabCtrl');
 });

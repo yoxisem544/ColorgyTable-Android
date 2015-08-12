@@ -64,21 +64,19 @@
           <table class="simulator-table">
             <thead>
               <tr>
-                <th></th>
-                <th>一</th>
-                <th>二</th>
-                <th>三</th>
-                <th>四</th>
-                <th>五</th>
+                <th class="th1">一</th>
+                <th class="th2">二</th>
+                <th class="th3">三</th>
+                <th class="th4">四</th>
+                <th class="th5">五</th>
                 <!--<th>六</th>
                 <th>日</th>-->
               </tr>
             </thead>
             <tbody>
               <tr class="class0">
-                <td>0</td>
                 <td class="M1 day1 period1"></td>
-                <td class="T1 day2 period1"><div class="simulator-table-course">電子學</div></td>
+                <td class="T1 day2 period1"><div class="simulator-table-course" ng-click="openModal()">電子學</div></td>
                 <td class="W1 day3 period1"></td>
                 <td class="R1 day4 period1"></td>
                 <td class="F1 day5 period1"></td>
@@ -86,7 +84,6 @@
                 <td class="Sun1 day7 period1"></td>-->
               </tr>
               <tr class="class1">
-                <td>1</td>
                 <td class="M2 day1 period2"></td>
                 <td class="T2 day2 period2"></td>
                 <td class="W2 day3 period2"></td>
@@ -96,7 +93,6 @@
                 <td class="Sun2 day7 period2"></td>-->
               </tr>
               <tr class="class2">
-                <td>2</td>
                 <td class="M3 day1 period3"></td>
                 <td class="T3 day2 period3"></td>
                 <td class="W3 day3 period3"></td>
@@ -106,7 +102,6 @@
                 <td class="Sun3 day7 period3"></td>-->
               </tr>
               <tr class="class3">
-                <td>3</td>
                 <td class="M4 day1 period4"></td>
                 <td class="T4 day2 period4"></td>
                 <td class="W4 day3 period4"></td>
@@ -116,7 +111,6 @@
                 <td class="Sun4 day7 period4"></td>-->
               </tr>
               <tr class="class4">
-                <td>4</td>
                 <td class="M5 day1 period5"></td>
                 <td class="T5 day2 period5"></td>
                 <td class="W5 day3 period5"></td>
@@ -126,7 +120,6 @@
                 <td class="Sun5 day7 period5"></td>-->
               </tr>
               <tr class="class5">
-                <td>5</td>
                 <td class="M6 day1 period6"></td>
                 <td class="T6 day2 period6"></td>
                 <td class="W6 day3 period6"></td>
@@ -136,7 +129,6 @@
                 <td class="Sun6 day7 period6"></td>-->
               </tr>
               <tr class="class6">
-                <td>6</td>
                 <td class="M7 day1 period7"></td>
                 <td class="T7 day2 period7"></td>
                 <td class="W7 day3 period7"></td>
@@ -146,7 +138,6 @@
                 <td class="Sun7 day7 period7"></td>-->
               </tr>
               <tr class="class7">
-                <td>7</td>
                 <td class="M8 day1 period8"></td>
                 <td class="T8 day2 period8"></td>
                 <td class="W8 day3 period8"></td>
@@ -156,7 +147,6 @@
                 <td class="Sun8 day7 period8"></td>-->
               </tr>
               <tr class="class8">
-                <td>8</td>
                 <td class="M9 day1 period9"></td>
                 <td class="T9 day2 period9"></td>
                 <td class="W9 day3 period9"></td>
@@ -166,7 +156,6 @@
                 <td class="Sun9 day7 period9"></td>-->
               </tr>
               <tr class="class9">
-                <td>9</td>
                 <td class="M10 day1 period10"></td>
                 <td class="T10 day2 period10"></td>
                 <td class="W10 day3 period10"></td>
@@ -176,7 +165,6 @@
                 <td class="Sun10 day7 period10"></td>-->
               </tr>
               <tr class="class10">
-                <td>10</td>
                 <td class="MA day1 period11"></td>
                 <td class="TA day2 period11"></td>
                 <td class="WA day3 period11"></td>
@@ -186,7 +174,6 @@
                 <td class="SunA day7 period11"></td>-->
               </tr>
               <tr class="classA">
-                <td>A</td>
                 <td class="MB day1 period12"></td>
                 <td class="TB day2 period12"></td>
                 <td class="WB day3 period12"></td>
@@ -196,7 +183,6 @@
                 <td class="SunB day7period12"></td>-->
               </tr>
               <tr class="classB">
-                <td>B</td>
                 <td class="MC day1 period13"></td>
                 <td class="TC day2 period13"></td>
                 <td class="WC day3 period13"></td>
@@ -206,7 +192,6 @@
                 <td class="SunC day7 period13"></td>-->
               </tr>
               <tr class="classC">
-                <td>C</td>
                 <td class="MC day1 period14"></td>
                 <td class="TC day2 period14"></td>
                 <td class="WC day3 period14"></td>
@@ -230,7 +215,7 @@
               <input type="text" placeholder="Search" ng-model="searchCourseText.text" ng-change="searchTextChanged()">
             </div>
             <ion-item ng-repeat="(k, v) in data | filter:searchCourseText.delaytext | limitTo:totalDisplayedCourses" ng-click="list_click(v)" ng-style="{'height': '70px'}" class="course-item">
-              <p><span>{{v.name}}</span> - {{v.code}}</p>
+              <p><span>{{v.name}}</span><br><span>{{v.code}}</span></p>
               <button class="button">
                 <i class="icon ion-plus"></i>
               </button>
@@ -276,6 +261,39 @@
           <button class="button button-royal" ng-repeat="n in [1,2,3,4]">{{n}}</button>
         </ion-content>
       </ion-view>
+    </script>
+    <script id="my-modal.html" type="text/ng-template">
+      <ion-modal-view>
+        <ion-header-bar>
+          <h1 class="title">My Modal title</h1>
+          <div class="buttons">
+            <button class="button" ng-click="closeModal()">返回</button>
+          </div>
+        </ion-header-bar>
+        <ion-content>
+            <div class="modal-content">
+              <div class="content-header">
+                <p class="course-lecturer">方邵雲</p>
+                <h1 class="course-name">電子學</h1>
+              </div>
+              <div class="info">
+                <h4 class="under-line-title">詳細資訊</h4>
+                <ul>
+                  <li>學分： <span class="modal-course-credits"></span></li>
+                  <li>課程代號： <span class="modal-course-general-code"></span></li>
+                  <li>課程網站： <a class="modal-course-link" href="" target="_blank">前往課程網站</a></li>
+                </ul>
+              </div>
+              <div class="info">
+                <h4 class="under-line-title">我的同學</h4>
+                <div class="classmates">
+                  <div class="classmate-item">
+                  </div>
+                </div>
+              </div>
+            </div>
+        </ion-content>
+      </ion-modal-view>
     </script>
 
   </body>
