@@ -19,6 +19,27 @@
   - ionic/cordova will do the install fb sdk work for u.
   - all you need to do is make sure FBAppId is correct.
   - last, never trust the getting start guide. Always enter hashes in settins, not in quick start....fk.
+## 接下來的工作
+- 把選課的流程串起來
+  - 在搜尋的地方先判斷有沒有抓課程資料，沒有的話整包下載。
+  - 判斷有無網路（裝置上）
+- refresh token
+- analytics
+- 登入畫面
+- 登入機制
+  - 抓取me API，存資料。
+  - 判斷有沒有顯示教學
+- 強制登出未驗證email者
+
+## keys
+- isLogin: Bool 用來判定是否登入
+- loginType: String "fb", "account" 兩種
+- ColorgyAccessToken: String token
+- ColorgyRefreshToken: String refresh用
+- CourseData: String or Object 整包的課程
+- userName: String 使用者名字
+- userSchool: String 學校
+- isGuideShown: Bool 有沒有顯示過教學
 
 ##Why Ionic?
 因為他幫我做好多元件了，棒
