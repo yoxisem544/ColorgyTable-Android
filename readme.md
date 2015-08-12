@@ -19,6 +19,7 @@
   - ionic/cordova will do the install fb sdk work for u.
   - all you need to do is make sure FBAppId is correct.
   - last, never trust the getting start guide. Always enter hashes in settins, not in quick start....fk.
+  
 ## 接下來的工作
 - 把選課的流程串起來
   - 在搜尋的地方先判斷有沒有抓課程資料，沒有的話整包下載。
