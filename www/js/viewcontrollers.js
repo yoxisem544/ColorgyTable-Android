@@ -341,26 +341,19 @@ angular.module('colorgytable.controllers', [])
   };
 
   $scope.deleteCourse = function() {
-    if (!$scope.user.course_code) {
+    if (!$scope.test.user.course_code) {
       console.error("no course code");
       return;
     }
-    if (!$scope.user.course_org) {
-      console.error("no course org");
-      return;
-    }
-    if (!$scope.user.year) {
-      console.error("no course year");
-      return;
-    }
-    if (!$scope.user.term) {
-      console.error("no course term");
-      return;
-    }
+    var front_url = "https://colorgy.io:443/api/v1/me/user_courses.json?filter%5Bcourse_code%5D=";
+    var code = $scope.test.user.course_code;
+    var middle_url = "&&&&&&&&access_token=";
+    var accessToken = window.localStorage["ColorgyAccessToken"];
+    var url = front_url + code + middle_url + accessToken;
 
-    $http.get(url)
+    $http.delete(url)
     .success(function(data, status, headers, config) {
-      console.log("DELETE: " + $scope.user.course_code);
+      console.log("DELETE: " + $scope.test.user.course_code);
     })
     .error(function(data, status, headers, config) {
       console.error("error");
