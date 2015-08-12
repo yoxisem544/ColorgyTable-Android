@@ -1,4 +1,4 @@
-angular.module('colorgytable.controllers', [])
+angular.module('colorgytable.controllers', ['ngCordova'])
 
 .controller('MenuCtrl', function($scope, $ionicModal, $http) {
 
@@ -127,7 +127,7 @@ angular.module('colorgytable.controllers', [])
 
 })
 
-.controller('MainCtrl', function($scope, $http) {
+.controller('MainCtrl', function($scope, $http, $cordovaNetwork) {
 
   $scope.logout = function() {
     window.localStorage.removeItem('userName');
@@ -359,6 +359,26 @@ angular.module('colorgytable.controllers', [])
       console.error("error");
       console.error(data);
     });
+  };
+
+  document.addEventListener("deviceready", function () {
+    console.log('deviceready');
+    $scope.$on('$cordovaNetwork:online', function(event, networkStatus) {
+      console.log(event);
+      console.log(networkStatus);
+    });
+    $scope.$on('$cordovaNetwork:offline', function(event, networkStatus) {
+      console.log(event);
+      console.log(networkStatus);
+    });
+  }, false);
+  
+  $scope.checkNetworkAvailability = function() {
+    console.log(true);
+    console.log($cordovaNetwork.getNetwork());
+    alert("ok");
+    alert("isOnline ?");
+    alert($cordovaNetwork.isOnline());
   };
 })
 

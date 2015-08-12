@@ -14,6 +14,8 @@
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
+    <!-- ng-cordova have to be before cordova -->
+    <script src="lib/ngcordova/dist/ng-cordova.js"></script>
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
@@ -270,6 +272,8 @@
           <label class="item item-input">
           <input type="text" placeholder="accesstoken" ng-model="test.accesstoken">
           </label>
+          you have to get and save accesstoken first! this is for dev usage. need revise if you want to distribute!
+          開發時，每次都要要一次accesstoken（手動），要記得存起來。
           <button class="button button-full button-light" ng-click="saveAccesstoken()">把accesstoken存下來。</button>
 
           <button class="button button-outline button-positive" ng-click="logout()">Loutout</button>
@@ -277,6 +281,17 @@
           <button class="button button-calm" ng-click="chechLength()">check length</button>
           <button class="button button-royal" ng-repeat="n in [1,2,3,4]">{{n}}</button>
           <br>
+
+          <div class="item item-divider">
+            Network region
+          </div>
+          this is only available on device, not on browser<br>
+          這個只在手機上可以用，我有測過了。
+          <button class="button button-full button-balanced" ng-click="checkNetworkAvailability()">Test Network</button>
+
+          <div class="item item-divider">
+            API region
+          </div>
 
           <label class="item item-input">
             <textarea type="text" placeholder="display result" ng-model="test.display_result"></textarea>

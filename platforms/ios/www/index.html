@@ -5,8 +5,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/ionic.app.css" rel="stylesheet">
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
@@ -15,6 +14,8 @@
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
+    <!-- ng-cordova have to be before cordova -->
+    <script src="lib/ngcordova/dist/ng-cordova.js"></script>
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
@@ -26,6 +27,346 @@
     <script src="js/ngopenfb.js"></script>
   </head>
   <body ng-app="colorgytable" class="platform-ios platform-cordova platform-webview">
-    <ion-nav-view></ion-nav-view>
+
+    <ion-nav-bar class="bar-positive">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+      <ion-nav-buttons side="right">
+        <a class="button" href="#/tab/search_course">
+          <i class="icon ion-plus"></i>
+        </a>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+
+    <ion-nav-view>
+    </ion-nav-view>
+
+
+    <script id="templates/tabs.html" type="text/ng-template">
+      <ion-tabs class="tabs-icon-top tabs-positive">
+
+        <ion-tab title="Home" icon="ion-home" href="#/tab/home">
+          <ion-nav-view name="home-tab"></ion-nav-view>
+        </ion-tab>
+
+        <ion-tab title="About" icon="ion-ios-information" href="#/tab/about">
+          <ion-nav-view name="about-tab"></ion-nav-view>
+        </ion-tab>
+
+        <ion-tab title="Main" icon="ion-ios-world" href="#/tab/main">
+          <ion-nav-view name="main-tab"></ion-nav-view>
+        </ion-tab>
+
+      </ion-tabs>
+    </script>
+
+    <script id="templates/home.html" type="text/ng-template">
+      <ion-view view-title="課表">
+        <ion-content class="padding">
+          <table class="simulator-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>一</th>
+                <th>二</th>
+                <th>三</th>
+                <th>四</th>
+                <th>五</th>
+                <!--<th>六</th>
+                <th>日</th>-->
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="class0">
+                <td>0</td>
+                <td class="M1 day1 period1"></td>
+                <td class="T1 day2 period1"><div class="simulator-table-course">電子學</div></td>
+                <td class="W1 day3 period1"></td>
+                <td class="R1 day4 period1"></td>
+                <td class="F1 day5 period1"></td>
+                <!--<td class="S1 day6 period1"></td>
+                <td class="Sun1 day7 period1"></td>-->
+              </tr>
+              <tr class="class1">
+                <td>1</td>
+                <td class="M2 day1 period2"></td>
+                <td class="T2 day2 period2"></td>
+                <td class="W2 day3 period2"></td>
+                <td class="R2 day4 period2"></td>
+                <td class="F2 day5 period2"></td>
+                <!--<td class="S2 day6 period2"></td>
+                <td class="Sun2 day7 period2"></td>-->
+              </tr>
+              <tr class="class2">
+                <td>2</td>
+                <td class="M3 day1 period3"></td>
+                <td class="T3 day2 period3"></td>
+                <td class="W3 day3 period3"></td>
+                <td class="R3 day4 period3"></td>
+                <td class="F3 day5 period3"></td>
+                <!--<td class="S3 day6 period3"></td>
+                <td class="Sun3 day7 period3"></td>-->
+              </tr>
+              <tr class="class3">
+                <td>3</td>
+                <td class="M4 day1 period4"></td>
+                <td class="T4 day2 period4"></td>
+                <td class="W4 day3 period4"></td>
+                <td class="R4 day4 period4"></td>
+                <td class="F4 day5 period4"></td>
+                <!--<td class="S4 day6 period4"></td>
+                <td class="Sun4 day7 period4"></td>-->
+              </tr>
+              <tr class="class4">
+                <td>4</td>
+                <td class="M5 day1 period5"></td>
+                <td class="T5 day2 period5"></td>
+                <td class="W5 day3 period5"></td>
+                <td class="R5 day4 period5"></td>
+                <td class="F5 day5 period5"></td>
+                <!--<td class="S5 day6 period5"></td>
+                <td class="Sun5 day7 period5"></td>-->
+              </tr>
+              <tr class="class5">
+                <td>5</td>
+                <td class="M6 day1 period6"></td>
+                <td class="T6 day2 period6"></td>
+                <td class="W6 day3 period6"></td>
+                <td class="R6 day4 period6"></td>
+                <td class="F6 day5 period6"></td>
+                <!--<td class="S6 day6 period6"></td>
+                <td class="Sun6 day7 period6"></td>-->
+              </tr>
+              <tr class="class6">
+                <td>6</td>
+                <td class="M7 day1 period7"></td>
+                <td class="T7 day2 period7"></td>
+                <td class="W7 day3 period7"></td>
+                <td class="R7 day4 period7"></td>
+                <td class="F7 day5 period7"></td>
+                <!--<td class="S7 day6 period7"></td>
+                <td class="Sun7 day7 period7"></td>-->
+              </tr>
+              <tr class="class7">
+                <td>7</td>
+                <td class="M8 day1 period8"></td>
+                <td class="T8 day2 period8"></td>
+                <td class="W8 day3 period8"></td>
+                <td class="R8 day4 period8"></td>
+                <td class="F8 day5 period8"></td>
+                <!--<td class="S8 day6 period8"></td>
+                <td class="Sun8 day7 period8"></td>-->
+              </tr>
+              <tr class="class8">
+                <td>8</td>
+                <td class="M9 day1 period9"></td>
+                <td class="T9 day2 period9"></td>
+                <td class="W9 day3 period9"></td>
+                <td class="R9 day4 period9"></td>
+                <td class="F9 day5 period9"></td>
+                <!--<td class="S9 day6 period9"></td>
+                <td class="Sun9 day7 period9"></td>-->
+              </tr>
+              <tr class="class9">
+                <td>9</td>
+                <td class="M10 day1 period10"></td>
+                <td class="T10 day2 period10"></td>
+                <td class="W10 day3 period10"></td>
+                <td class="R10 day4 period10"></td>
+                <td class="F10 day5 period10"></td>
+                <!--<td class="S10 day6 period10"></td>
+                <td class="Sun10 day7 period10"></td>-->
+              </tr>
+              <tr class="class10">
+                <td>10</td>
+                <td class="MA day1 period11"></td>
+                <td class="TA day2 period11"></td>
+                <td class="WA day3 period11"></td>
+                <td class="RA day4 period11"></td>
+                <td class="FA day5 period11"></td>
+                <!--<td class="SA day6 period11"></td>
+                <td class="SunA day7 period11"></td>-->
+              </tr>
+              <tr class="classA">
+                <td>A</td>
+                <td class="MB day1 period12"></td>
+                <td class="TB day2 period12"></td>
+                <td class="WB day3 period12"></td>
+                <td class="RB day4 period12"></td>
+                <td class="FB day5 period12"></td>
+                <!--<td class="SB day6 period12"></td>
+                <td class="SunB day7period12"></td>-->
+              </tr>
+              <tr class="classB">
+                <td>B</td>
+                <td class="MC day1 period13"></td>
+                <td class="TC day2 period13"></td>
+                <td class="WC day3 period13"></td>
+                <td class="RC day4 period13"></td>
+                <td class="FC day5 period13"></td>
+                <!--<td class="SC day6 period13"></td>
+                <td class="SunC day7 period13"></td>-->
+              </tr>
+              <tr class="classC">
+                <td>C</td>
+                <td class="MC day1 period14"></td>
+                <td class="TC day2 period14"></td>
+                <td class="WC day3 period14"></td>
+                <td class="RC day4 period14"></td>
+                <td class="FC day5 period14"></td>
+                <!--<td class="SC day6 period14"></td>
+                <td class="SunC day7 period14"></td>-->
+              </tr>
+            </tbody>
+          </table>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="templates/search_course.html" type="text/ng-template">
+      <ion-view view-title="選課">
+        <ion-content delegate-handle="course_scroll" on-scroll="onScroll()">
+          <div class="list">
+            <div class="item item-input">
+              <i class="icon ion-search placeholder-icon"></i>
+              <input type="text" placeholder="Search" ng-model="searchCourseText.text" ng-change="searchTextChanged()">
+            </div>
+            <ion-item ng-repeat="(k, v) in data | filter:searchCourseText.delaytext | limitTo:totalDisplayedCourses" ng-click="list_click(v)" ng-style="{'height': '70px'}" class="course-item">
+              <p><span>{{v.name}}</span> - {{v.code}}</p>
+              <button class="button">
+                <i class="icon ion-plus"></i>
+              </button>
+            </ion-item>
+          </div>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="templates/about.html" type="text/ng-template">
+      <ion-view view-title="About">
+        <ion-content class="padding">
+          <iframe src="https://colorgy.github.io/Core-Front-End/" style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 10000;
+          width: 100%;
+          height: 100%;
+          "></iframe>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="templates/nav-stack.html" type="text/ng-template">
+      <ion-view view-title="Tab Nav Stack">
+        <ion-content class="padding">
+          <p><img src="http://ionicframework.com/img/diagrams/tabs-nav-stack.png" style="width:100%"></p>
+        </ion-content>
+      </ion-view>
+    </script>
+    <script id="templates/main.html" type="text/ng-template">
+      <ion-view view-title="Main">
+        <ion-content>
+          <label class="item item-input">
+          <input type="text" placeholder="accesstoken" ng-model="test.accesstoken">
+          </label>
+          <button class="button button-full button-light" ng-click="saveAccesstoken()">把accesstoken存下來。</button>
+
+          <button class="button button-outline button-positive" ng-click="logout()">Loutout</button>
+          <button class="button button-outline button-calm" ng-click="download_course()">Download course</button>
+          <button class="button button-calm" ng-click="chechLength()">check length</button>
+          <button class="button button-royal" ng-repeat="n in [1,2,3,4]">{{n}}</button>
+          <br>
+
+          <div class="item item-divider">
+            Network region
+          </div>
+          <button class="button button-full button-balanced" ng-click="checkNetworkAvailability()">Test Network</button>
+
+          <div class="item item-divider">
+            API region
+          </div>
+
+          <label class="item item-input">
+            <textarea type="text" placeholder="display result" ng-model="test.display_result"></textarea>
+          </label>
+
+          <button class="button button-calm button-full" ng-click="me()">API me</button>
+          <label class="item item-input">
+
+          <input type="text" placeholder="這邊要填學校 school" ng-model="test.school">
+          </label>
+          <div class="item item-input-inset">
+            <label class="item-input-wrapper">
+              <input type="text" placeholder="這邊填 code [code]" ng-model="test.course_code">
+            </label>
+            <button class="button button-calm" ng-click="getCourseInfo()">
+              API get course info
+            </button>
+          </div>
+
+
+          <div class="item item-input-inset">
+            <label class="item-input-wrapper">
+              <input type="text" placeholder="這邊填使用者 userid [id]" ng-model="test.userid">
+            </label>
+            <button class="button button-calm" ng-click="getUserAvatar()">
+            API get user avatar
+            </button>
+          </div>
+          
+
+          <div class="item item-input-inset">
+            <label class="item-input-wrapper">
+              <input type="text" placeholder="這邊填使用者 userid [id]" ng-model="test.userid">
+            </label>
+            <button class="button button-calm" ng-click="getUserCourses()">
+            API get user courses
+            </button>
+          </div>
+
+          <div class="item item-input-inset">
+            <label class="item-input-wrapper">
+              <input type="text" placeholder="這邊填課程代碼 course code [course code]" ng-model="test.course_code">
+            </label>
+            <button class="button button-calm" ng-click="getCourseClassmates()">
+            API get course classmates
+            </button>
+          </div>
+
+         <ul>
+         <li class="item">
+             <div class="list list-inset">
+              <label class="item item-input">
+                <input type="text" ng-model="test.user.uuid" placeholder="(必)uuid [uuid]">
+              </label>
+              <label class="item item-input">
+                <input type="text" ng-model="test.user.course_code" placeholder="(必)這邊填課程代碼 [course code]">
+              </label>
+              <label class="item item-input">
+                <input type="text" ng-model="test.user.course_org" placeholder="(必)這邊填學校 [course_organization_code]">
+              </label>
+              <label class="item item-input">
+                <input type="text" ng-model="test.user.year" placeholder="(必)這邊填年 [year]">
+              </label>
+              <label class="item item-input">
+                <input type="text" ng-model="test.user.term" placeholder="(必)這邊填學期 [term]">
+              </label>
+              </div>
+           <button class="button button-energized" ng-click="putCourse()">
+              API PUT course
+            </button>
+            <button class="button button-assertive" ng-click="deleteCourse()">
+              API DELETE course
+            </button>
+            </li>
+         </ul>
+
+        </ion-content>
+      </ion-view>
+    </script>
+
   </body>
 </html>

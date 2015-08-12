@@ -1,0 +1,25 @@
+<ion-view view-title="Main">
+  <ion-content>
+    hi
+    jdkjdsjksdkjdkjs
+    <button class="button button-outline button-positive" ng-click="logout()">Loutout</button>
+    <button class="button button-outline button-calm" ng-click="download_course()">Download course</button>
+    <button class="button button-calm" ng-click="chechLength()">check length</button>
+    <button class="button button-royal" ng-repeat="n in [1,2,3,4]">{{n}}</button>
+  </ion-content>
+	<ion-tabs class="tabs-icon-top tabs-positive">
+
+		<ion-tab title="Home" icon="ion-home" href="#/tab/home">
+			<ion-nav-view name="home-tab"></ion-nav-view>
+		</ion-tab>
+
+		<ion-tab title="About" icon="ion-ios-information" href="#/tab/about">
+			<ion-nav-view name="about-tab"></ion-nav-view>
+		</ion-tab>
+
+		<ion-tab title="Contact" icon="ion-ios-world" ui-sref="tabs.contact">
+			<ion-nav-view name="contact-tab"></ion-nav-view>
+		</ion-tab>
+
+	</ion-tabs>
+</ion-view>
