@@ -50,5 +50,13 @@
             "APP_ID": "752440461479659",
             "APP_NAME": "Colorgy.io"
         }
+    },
+    "cordova-plugin-network-information": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-network-information"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

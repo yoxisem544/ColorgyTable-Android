@@ -51,6 +51,10 @@
                         {
                             "xml": "<access origin=\"https://*.akamaihd.net\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -82,6 +86,12 @@
                         }
                     ],
                     "Security.framework": [
+                        {
+                            "xml": true,
+                            "count": 1
+                        }
+                    ],
+                    "SystemConfiguration.framework": [
                         {
                             "xml": true,
                             "count": 1
@@ -132,6 +142,9 @@
         "com.phonegap.plugins.facebookconnect": {
             "APP_ID": "752440461479659",
             "APP_NAME": "Colorgy.io",
+            "PACKAGE_NAME": "com.ionicframework.colorgytableandroid410185"
+        },
+        "cordova-plugin-network-information": {
             "PACKAGE_NAME": "com.ionicframework.colorgytableandroid410185"
         }
     },

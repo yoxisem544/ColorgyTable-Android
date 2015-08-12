@@ -52,6 +52,9 @@
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		F3902D8CCD7D48B4A048AE5F /* IonicKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = C830DE7B23414DF28FFB66A7 /* IonicKeyboard.m */; };
 		F5726ABE626F472A9ADB56BD /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E0871DDBAAC4547AFCA62AA /* CDVLogger.m */; };
+		D0C2BF8745E6426A9D3A367B /* CDVConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 6037BC51AEC84B0B9344BC69 /* CDVConnection.m */; };
+		B25EA37F2ACF4DCB8576C1FA /* CDVReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 532F78EC7BED43EEA061F7F1 /* CDVReachability.m */; };
+		05F01B0DC74D4E5EBD0F79B3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D951731AEA7E42E6B3B92F44 /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +138,11 @@
 		F0CC692D890941AA84C262E4 /* UIWebViewExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIWebViewExtension.h; path = com.ionic.keyboard/UIWebViewExtension.h; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = "ColorgyTable-Android/config.xml"; sourceTree = "<group>"; };
 		F9A7C2B52A4440538138C894 /* libsqlite3.dylib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		6037BC51AEC84B0B9344BC69 /* CDVConnection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVConnection.m"; path = "cordova-plugin-network-information/CDVConnection.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		532F78EC7BED43EEA061F7F1 /* CDVReachability.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVReachability.m"; path = "cordova-plugin-network-information/CDVReachability.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		6C79203B81624D7DA5D97744 /* CDVConnection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVConnection.h"; path = "cordova-plugin-network-information/CDVConnection.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		2469D54EE1414BDA9B89F606 /* CDVReachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVReachability.h"; path = "cordova-plugin-network-information/CDVReachability.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		D951731AEA7E42E6B3B92F44 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "SystemConfiguration.framework"; path = "System/Library/Frameworks/SystemConfiguration.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +160,7 @@
 				2CC9FDD26D4B47F1AD02424C /* Social.framework in Frameworks */,
 				1BDF0E94C87B444089853831 /* Accounts.framework in Frameworks */,
 				2ABD14690B8F46E7A59F9C1C /* Security.framework in Frameworks */,
+				05F01B0DC74D4E5EBD0F79B3 /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,6 +239,7 @@
 				3E7988534B0C4165A7832624 /* Social.framework */,
 				52EE51F0D68A43268E5B2EBD /* Accounts.framework */,
 				D77BAD2D760343F8931AF9EA /* Security.framework */,
+				D951731AEA7E42E6B3B92F44 /* SystemConfiguration.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -259,6 +269,10 @@
 				DA81849CA86B47DD8E4F0D43 /* CDVViewController+SplashScreen.h */,
 				8994F8FAE7D34D959B5D97C6 /* FacebookConnectPlugin.m */,
 				716E9134BF664359940DD951 /* FacebookConnectPlugin.h */,
+				6037BC51AEC84B0B9344BC69 /* CDVConnection.m */,
+				532F78EC7BED43EEA061F7F1 /* CDVReachability.m */,
+				6C79203B81624D7DA5D97744 /* CDVConnection.h */,
+				2469D54EE1414BDA9B89F606 /* CDVReachability.h */,
 			);
 			name = Plugins;
 			path = "ColorgyTable-Android/Plugins";
@@ -450,6 +464,8 @@
 				B5F45D810A8A46A3BA6D0A63 /* CDVSplashScreen.m in Sources */,
 				CB5BFB8E3C0A45819A83C5AA /* CDVViewController+SplashScreen.m in Sources */,
 				B0B39B65D1F54FF2980589DA /* FacebookConnectPlugin.m in Sources */,
+				D0C2BF8745E6426A9D3A367B /* CDVConnection.m in Sources */,
+				B25EA37F2ACF4DCB8576C1FA /* CDVReachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
