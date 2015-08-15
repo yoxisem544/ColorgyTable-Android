@@ -138,7 +138,7 @@ angular.module('colorgytable.controllers', ['ngCordova'])
 
   $scope.download_course = function() {
     var front_url = "https://colorgy.io:443/api/";
-    var middle_url = "/courses.json?per_page=3000&&filter%5Byear%5D=2015&filter%5Bterm%5D=1&fields=code%2Cyear%2Cname%2Clecturer&&access_token=";
+    var middle_url = "/courses.json?per_page=3000&&filter%5Byear%5D=2015&filter%5Bterm%5D=1&&&access_token=";
     var token = window.localStorage["ColorgyAccessToken"];
     var url = front_url + 'ntust' + middle_url + token;
     alert(JSON.stringify(url, null, '  '));
@@ -154,7 +154,7 @@ angular.module('colorgytable.controllers', ['ngCordova'])
     });
   };
 
-  $scope.chechLength = function() {
+  $scope.checkLength = function() {
     var course = window.localStorage['CourseData'];
     alert(course.length);
   };
@@ -171,11 +171,13 @@ angular.module('colorgytable.controllers', ['ngCordova'])
       $http.get(front_url + accessToken)
       .success(function(data, status, headers, config) {
         $scope.test.display_result = JSON.stringify(data, null, '  ');
+        window.localStorage["UserName"] = data.name;
+        window.localStorage["UserId"] = data.id;
       })
       .error(function(data, status, headers, config) {
         console.error("error");
         console.error(data);
-      }); 
+      });
     } else {
       console.error("no access token");
     }
@@ -204,7 +206,7 @@ angular.module('colorgytable.controllers', ['ngCordova'])
     .error(function(data, status, headers, config) {
       console.error("error");
       console.error(data);
-    });     
+    });
   };
   $scope.getUserAvatar = function() {
     var front_url = "https://colorgy.io:443/api/v1/users.json?filter%5Bid%5D=";
@@ -229,7 +231,7 @@ angular.module('colorgytable.controllers', ['ngCordova'])
     .error(function(data, status, headers, config) {
       console.error("error");
       console.error(data);
-    }); 
+    });
 
   };
 
@@ -256,7 +258,7 @@ angular.module('colorgytable.controllers', ['ngCordova'])
     .error(function(data, status, headers, config) {
       console.error("error");
       console.error(data);
-    }); 
+    });
 
   };
 
@@ -281,37 +283,38 @@ angular.module('colorgytable.controllers', ['ngCordova'])
 
   };
 
-  $scope.putCourse = function() {
-    if (!$scope.test.user.course_code) {
+  $scope.putCourse = function(course_code,course_org,year,term) {
+    if (!course_code) {
       console.error("no course code");
       return;
     }
-    if (!$scope.test.user.course_org) {
+    if (!course_org) {
       console.error("no course org");
       return;
     }
-    if (!$scope.test.user.year) {
+    if (!year) {
       console.error("no course year");
       return;
     }
-    if (!$scope.test.user.term) {
+    if (!term) {
       console.error("no course term");
       return;
     }
-    if (!$scope.test.user.uuid) {
+    var uuid = window.localStorage["UserId"] + window.localStorage["UserName"] + course_code;
+
+    if (!uuid) {
       console.error("no uuid");
       return;
     }
-    var uuid = $scope.test.user.uuid;
     var front_url = "https://colorgy.io:443/api/v1/me/user_courses/" + uuid + ".json?access_token=";
     var accessToken = window.localStorage["ColorgyAccessToken"];
     var url = front_url + accessToken;
     var params = {
       'user_courses': {
-        'course_code': $scope.test.user.course_code,
-        'course_organization_code': $scope.test.user.course_org,
-        'year': parseInt($scope.test.user.year),
-        'term': parseInt($scope.test.user.term)
+        'course_code': course_code,
+        'course_organization_code': course_org,
+        'year': parseInt(year),
+        'term': parseInt(term)
       }
       // 'user_courses[course_code]': $scope.test.user.course_code,
       // 'user_courses[course_organization_code]': $scope.test.user.course_org,
@@ -372,7 +375,7 @@ angular.module('colorgytable.controllers', ['ngCordova'])
       console.log(networkStatus);
     });
   }, false);
-  
+
   $scope.checkNetworkAvailability = function() {
     console.log(true);
     console.log($cordovaNetwork.getNetwork());
@@ -428,8 +431,13 @@ angular.module('colorgytable.controllers', ['ngCordova'])
     }
   };
 
-  $scope.list_click = function(indexPath) {
-    alert(JSON.stringify(indexPath, null, '  '));
+  $scope.list_click = function(value) {
+    alert(JSON.stringify(value, null, '  '));
+    var course_code = value.code;
+    //var course_year = value.year;
+    //var uuid = value.id + value.name;
+
+    //$scope.put(course_code);
   };
 
   $scope.onScroll = function() {
