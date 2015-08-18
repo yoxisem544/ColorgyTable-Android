@@ -15,6 +15,29 @@ $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
 
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "../lib/ionic/fonts" !default;
+
+
+
+// Include all of Ionic
+@import "www/lib/ionic/scss/ionic";
+
+.tabs-positive > .tabs, .tabs.tabs-positive{
+    background-color: #F78888;
+    border-color: #F78888;
+}
+
+.bar-positive .button.active, .bar-positive .button.activated{
+    background-color: #EF3838;
+    border-color: #EF3838;
+}
+
+.bar-positive .button{
+    background-color: #EF3838;
+    border-color: #EF3838;
+}
+
 ion-view[view-title="About"]{
 	> ion-content{
 		> .scroll{
@@ -121,11 +144,37 @@ ion-content {
 				&.course-conflict{
 					background-color: pink;
 					color: #fff;
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    -webkit-transform: translateY(-50%);
+                    -moz-transform: translateY(-50%);
+                    -o-transform: translateY(-50%);
+                    -ms-transform: translateY(-50%);
+                    width: calc(100% - 8px);
+                    left: 4px;
 
 					//-webkit-animation: NAME_YOUR_ANIMATION 5s infinite; /* Safari 4+ */
 					//-moz-animation:    NAME_YOUR_ANIMATION 5s infinite; /* Fx 5+ */
 					//-o-animation:      NAME_YOUR_ANIMATION 5s infinite; /* Opera 12+ */
 					//animation:         NAME_YOUR_ANIMATION 5s infinite;
+
+                    &:nth-child(1){
+                        transform: translateY(-50%) rotate(7.5deg);
+                        -webkit-transform: translateY(-50%) rotate(7.5deg);
+                        -moz-transform: translateY(-50%) rotate(7.5deg);
+                        -o-transform: translateY(-50%) rotate(7.5deg);
+                        -ms-transform: translateY(-50%) rotate(7.5deg);
+
+                    }
+                    &:nth-child(2){
+                        transform: translateY(-50%) rotate(15deg);
+                        -webkit-transform: translateY(-50%) rotate(15deg);
+                        -moz-transform: translateY(-50%) rotate(15deg);
+                        -o-transform: translateY(-50%) rotate(15deg);
+                        -ms-transform: translateY(-50%) rotate(15deg);
+
+                    }
 				}
 
 				&.on-hover{
@@ -442,11 +491,5 @@ th.th5:before {
     	}
     }
 }
-// The path for our ionicons font files, relative to the built CSS in www/css
-$ionicons-font-path: "../lib/ionic/fonts" !default;
 
-
-
-// Include all of Ionic
-@import "www/lib/ionic/scss/ionic";
 
