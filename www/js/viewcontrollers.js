@@ -111,7 +111,8 @@ angular.module('colorgytable.controllers', ['ngCordova'])
     $http.get(url)
     .success(function(data, status, headers, config) {
       window.localStorage['userName'] = data.name;
-      window.localStorage['userSchool'] = data.organization;
+      window.localStorage['userId'] = data.id;
+      window.localStorage['userOrg'] = data.organization_code;
       window.localStorage['isLogin'] = true;
       window.localStorage['loginType'] = "fb";
       // login ok.
@@ -171,8 +172,12 @@ angular.module('colorgytable.controllers', ['ngCordova'])
       $http.get(front_url + accessToken)
       .success(function(data, status, headers, config) {
         $scope.test.display_result = JSON.stringify(data, null, '  ');
+        console.log(data.organization_code);
         window.localStorage["UserName"] = data.name;
         window.localStorage["UserId"] = data.id;
+        window.localStorage["userOrg"] = data.organization_code;
+        window.localStorage['userId'] = data.id;
+        console.log(window.localStorage['userId']);
       })
       .error(function(data, status, headers, config) {
         console.error("error");
@@ -274,7 +279,8 @@ angular.module('colorgytable.controllers', ['ngCordova'])
 
     $http.get(url)
     .success(function(data, status, headers, config) {
-      $scope.test.display_result = JSON.stringify(data, null, '  ');
+      //$scope.test.display_result = JSON.stringify(data, null, '  ');
+      console.log(data);
     })
     .error(function(data, status, headers, config) {
       console.error("error");
@@ -385,7 +391,7 @@ angular.module('colorgytable.controllers', ['ngCordova'])
   };
 })
 
-.controller('SearchCourseCtrl', function($scope, $timeout, $ionicScrollDelegate) {
+.controller('SearchCourseCtrl', function($scope, $timeout, $ionicScrollDelegate, $http) {
   var data = window.localStorage["CourseData"];
   // alert(data);
   console.log(data);
@@ -432,12 +438,15 @@ angular.module('colorgytable.controllers', ['ngCordova'])
   };
 
   $scope.list_click = function(value) {
-    alert(JSON.stringify(value, null, '  '));
+    //alert(JSON.stringify(value, null, '  '));
+    var course_term = value.term
     var course_code = value.code;
-    //var course_year = value.year;
-    //var uuid = value.id + value.name;
+    var course_year = value.year;
+    var course_org = window.localStorage['userOrg'];
+    console.log(course_org);
 
-    //$scope.put(course_code);
+
+    $scope.putCourse(course_code,course_org,course_year,course_term);
   };
 
   $scope.onScroll = function() {
@@ -448,16 +457,90 @@ angular.module('colorgytable.controllers', ['ngCordova'])
     }
 
   };
+  $scope.putCourse = function(course_code,course_org,year,term) {
+    if (!course_code) {
+      console.error("no course code");
+      return;
+    }
+    if (!course_org) {
+      console.error("no course org");
+      return;
+    }
+    if (!year) {
+      console.error("no course year");
+      return;
+    }
+    if (!term) {
+      console.error("no course term");
+      return;
+    }
+    var uuid = window.localStorage["UserId"] + window.localStorage["UserName"] + course_code;
+
+    if (!uuid) {
+      console.error("no uuid");
+      return;
+    }
+    console.log(course_code);
+    console.log(course_org);
+    console.log(year);
+    console.log(term);
+    console.log(uuid);
+    var front_url = "https://colorgy.io:443/api/v1/me/user_courses/" + uuid + ".json?access_token=";
+    var accessToken = window.localStorage["ColorgyAccessToken"];
+    var url = front_url + accessToken;
+    var params = {
+      'user_courses': {
+        'course_code': course_code,
+        'course_organization_code': course_org,
+        'year': parseInt(year),
+        'term': parseInt(term),
+        'uuid': uuid
+      }
+      // 'user_courses[course_code]': $scope.test.user.course_code,
+      // 'user_courses[course_organization_code]': $scope.test.user.course_org,
+      // 'user_courses[year]': parseInt($scope.test.user.year),
+      // 'user_courses[term]': parseInt($scope.test.user.term)
+    };
+    console.log(params);
+    // $http.put(url, params, {"Content-Type": "application/x-www-form-urlencoded"})
+    // .success(function(data, status, headers, config) {
+    //   console.log("PUT: " + $scope.user.course_code);
+    // })
+    // .error(function(data, status, headers, config) {
+    //   console.error("error");
+    //   console.error(data);
+    // });
+    $http({
+      url: url,
+      method: "PUT",
+      data: params
+    })
+    .then(function(res) {
+      console.log("ok");
+      console.log(res);
+      var course_name = res.name;
+      var course_general_code = res.general_code;
+      var course_general_code = res.general_code;
+
+    }, function(res) {
+      console.error(res);
+    });
+  };
 })
 
-.controller('HomeTabCtrl', function($scope, $ionicModal) {
+.controller('HomeTabCtrl', function($scope, $ionicModal, $http) {
   $ionicModal.fromTemplateUrl('my-modal.html', {
     scope: $scope,
     animation: 'slide-in-right'
   }).then(function(modal) {
     $scope.modal = modal;
   });
-  $scope.openModal = function() {
+
+  $scope.openModal = function($event) {
+    console.log($event.currentTarget);
+    var course_code = $event.currentTarget.attributes['course-code'].value;
+    $scope.getCourseClassmates(course_code);
+    $scope.addModalInfo(course_code);
     $scope.modal.show();
   };
   $scope.closeModal = function() {
@@ -475,4 +558,225 @@ angular.module('colorgytable.controllers', ['ngCordova'])
   $scope.$on('modal.removed', function() {
     // Execute action
   });
+  $scope.getCourseClassmates = function(course_code) {
+    var front_url = "https://colorgy.io/api/v1/user_courses.json?filter%5Bcourse_code%5D=";
+    var course_code = course_code;
+    var middle_url = "&&&&&&&&&access_token=";
+    var url = front_url + course_code + middle_url + window.localStorage["ColorgyAccessToken"];
+    if (course_code === "" | typeof course_code === 'undefined') {
+      console.error("no course code");
+      return;
+    }
+
+    $http.get(url)
+    .success(function(data, status, headers, config) {
+      $scope.test.display_result = JSON.stringify(data, null, '  ');
+    })
+    .error(function(data, status, headers, config) {
+      console.error("error");
+      console.error(data);
+    });
+
+  };
+  $scope.getCourseInfo = function(course_code) {
+    var front_url = "https://colorgy.io:443/api/v1/";
+    var school = window.localStorage['userOrg'].toLowerCase();
+    var code = course_code;
+    var middle_url = "/courses.json?filter%5Bcode%5D=" + code + "&&&&&&&access_token=";
+    var accessToken = window.localStorage["ColorgyAccessToken"];
+    var url = front_url + school + middle_url + accessToken;
+    if (typeof accessToken === 'undefined') {
+      console.error("no token");
+      return;
+    }
+
+    if (typeof school === 'undefined') {
+      console.error("school error");
+      return;
+    }
+
+    $http.get(url)
+    .success(function(data, status, headers, config) {
+      return data;
+    })
+    .error(function(data, status, headers, config) {
+      console.error("error");
+      console.error(data);
+    });
+  };
+
+  $scope.getUserCourses = function() {
+    var front_url = "https://colorgy.io:443/api/v1/user_courses.json?filter%5Buser_id%5D=";
+    var id = window.localStorage['userId'];
+    var middle_url = "&&&&&&&&&&&&&access_token=";
+    var accessToken = window.localStorage["ColorgyAccessToken"];
+    var url = front_url + id + middle_url + accessToken;
+    console.log(url);
+    if (typeof accessToken === 'undefined') {
+      console.error("no token");
+      return;
+    }
+    if (id === "" || typeof id === 'undefined') {
+      console.error("you need a id");
+      return;
+    }
+
+    $http.get(url)
+    .success(function(data, status, headers, config) {
+      window.localStorage['userCourses'] = JSON.stringify(data, null, '  ');
+    })
+    .error(function(data, status, headers, config) {
+      console.error("error");
+      console.error(data);
+    });
+
+  };
+
+  $scope.appendCourses = function(){
+    var front_url = "https://colorgy.io:443/api/v1/";
+    var school = window.localStorage['userOrg'].toLowerCase();
+    var code;
+    var middle_url = "/courses.json?filter%5Bcode%5D=" + code + "&&&&&&&access_token=";
+    var accessToken = window.localStorage["ColorgyAccessToken"];
+    var url = front_url + school + middle_url + accessToken;
+    var userCourses = JSON.parse(window.localStorage['userCourses']);
+    var $course_table_element;
+    var course;
+    var course_code;
+    var getCourseUri;
+    var item_id;
+
+    console.log(userCourses.length);
+    //console.log(userCourses);
+
+    for(i=0 ; i <= userCourses.length - 1 ; i++){
+      //console.log(userCourses[i]);
+      course = userCourses[i];
+      course_code = course.course_code;
+      //console.log(course_code);
+      getCourseUri = 'https://colorgy.io/api/v1/'+ school +'/courses.json?' +
+        'filter[code]=' + course_code;
+      item_id = course.id;
+
+      $http.get(getCourseUri)
+      .success(function(data, status, headers, config) {
+
+        //console.log(data);
+        var course = data[0];
+        var course_name = course.name;
+        var course_lecturer = course.lecturer;
+        var course_general_code = course.general_code;
+        var course_code = course.code;
+        var credits = course.credits;
+        for (var i = 1; i <= 9; i++) {
+          var thisCourse_day = course['day_' + i];
+          var thisCourse_period = course['period_' + i];
+          var thisCourse_location = course['location_' + i];
+          $course_table_element = angular.element(document.querySelector('.day'+ thisCourse_day + '.period' + thisCourse_period));
+          $course_table_element.append('<div class="simulator-table-course active" ng-click="isClickable && openModal($event)" item-id="' + item_id +'" course-code="' + course_code + '">' + course_name + '</div>');
+
+        };
+        $scope.CourseConflictTest();
+
+
+      })
+      .error(function(data, status, headers, config) {
+        console.error("error");
+        console.error(data);
+      });
+    }
+
+  }
+  $scope.getCourseClassmates = function(course_code) {
+    var front_url = "https://colorgy.io/api/v1/user_courses.json?filter%5Bcourse_code%5D=";
+    var middle_url = "&&&&&&&&&access_token=";
+    var url = front_url + course_code + middle_url;
+    if (course_code === "" | typeof course_code === 'undefined') {
+      console.error("no course code");
+      return;
+    }
+
+    $http.get(url)
+    .success(function(data, status, headers, config) {
+      //$scope.test.display_result = JSON.stringify(data, null, '  ');
+      console.log(data);
+    })
+    .error(function(data, status, headers, config) {
+      console.error("error");
+      console.error(data);
+    });
+
+  };
+  $scope.addModalInfo = function(course_code){
+    var front_url = "https://colorgy.io:443/api/v1/";
+    var school = window.localStorage['userOrg'].toLowerCase();
+    var code = course_code;
+    var middle_url = "/courses.json?filter%5Bcode%5D=" + code + "&&&&&&&access_token=";
+    var accessToken = window.localStorage["ColorgyAccessToken"];
+    var url = front_url + school + middle_url + accessToken;
+    if (typeof accessToken === 'undefined') {
+      console.error("no token");
+      return;
+    }
+
+    if (typeof school === 'undefined') {
+      console.error("school error");
+      return;
+    }
+
+    $http.get(url)
+    .success(function(data, status, headers, config) {
+      var course = data[0];
+      var course_name = course.name;
+      var course_lecturer = course.lecturer;
+      var course_general_code = course.general_code;
+      var course_credits = course.credits;
+      var course_url = course.url;
+
+      var $course_name_element = angular.element(document.querySelector('.content-header .course-name'));
+      var $course_lecturer_element = angular.element(document.querySelector('.content-header .course-lecturer'));
+      var $course_general_code_element = angular.element(document.querySelector('.modal-content .info .modal-course-general-code'));
+      var $course_credits_element = angular.element(document.querySelector('.modal-content .info .modal-course-credits'));
+      var $course_url_element = angular.element(document.querySelector('.modal-content .info .modal-course-link'));
+
+      $course_name_element.html(course_name);
+      $course_lecturer_element.html(course_lecturer);
+      $course_general_code_element.html(course_general_code);
+      $course_credits_element.html(course_credits);
+      $course_url_element.html('<a href="' + course_url + '" target="_blank">前往課程網站</a>');
+
+    })
+    .error(function(data, status, headers, config) {
+      console.error("error");
+      console.error(data);
+    });
+  }
+  $scope.CourseConflictTest = function(){
+    var $tableBody = angular.element(document.querySelector('tbody'));
+    var $tableBlock = $tableBody.find('td');
+    console.log($tableBlock.length);
+
+    for(i = 0 ; i <= 69 ; i++){
+      var $courseBlock = $tableBlock[i];
+      var coursecount = angular.element($courseBlock).children('.simulator-table-course').length;
+      angular.element($courseBlock).clone().children('.simulator-table-course:nth-child(1)').removeClass('course-conflict-pack').css({
+          'transform' : '',
+          '-moz-transform' : '',
+          '-o-transform' : '',
+          '-ms-transform' : '',
+          '-webkit-transform' : '',
+          'top' : '0'
+        });
+
+      if(coursecount >= 2){
+        console.log('it is bigger than 2!');
+        angular.element($courseBlock).children('.simulator-table-course').addClass('course-conflict');
+
+      }
+    }
+
+  }
+  $scope.getUserCourses();
+  $scope.appendCourses();
+
 });;
